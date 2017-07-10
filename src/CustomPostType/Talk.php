@@ -9,17 +9,17 @@
  * @copyright 2017 Alain Schlesser
  */
 
-namespace AlainSchlesser\Speaking\CPT;
+namespace AlainSchlesser\Speaking\CustomPostType;
 
 /**
- * Class TalkCustomPostType.
+ * Class Talk.
  *
  * @since   0.1.0
  *
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-final class TalkCustomPostType extends BaseCustomPostType {
+final class Talk extends BaseCustomPostType {
 
 	const SLUG = 'talk';
 

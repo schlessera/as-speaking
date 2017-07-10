@@ -12,14 +12,14 @@
 namespace AlainSchlesser\Speaking\Shortcode;
 
 /**
- * Class SpeakingPageShortcode.
+ * Class SpeakingPage.
  *
  * @since   0.1.0
  *
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-final class SpeakingPageBaseShortcode extends BaseShortcode {
+final class SpeakingPage extends BaseShortcode {
 
 	const TAG      = 'speaking_page';
 	const VIEW_URI = 'views/speaking-page';

@@ -47,8 +47,8 @@ final class Plugin {
 	 */
 	private function get_modules() {
 		return [
-			Shortcode\SpeakingPageBaseShortcode::class,
-			CPT\TalkCustomPostType::class,
+			Shortcode\SpeakingPage::class,
+			CustomPostType\Talk::class,
 		];
 	}
 }

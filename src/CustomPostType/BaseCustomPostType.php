@@ -9,7 +9,7 @@
  * @copyright 2017 Alain Schlesser
  */
 
-namespace AlainSchlesser\Speaking\CPT;
+namespace AlainSchlesser\Speaking\CustomPostType;
 
 /**
  * Abstract class BaseCustomPostType.
