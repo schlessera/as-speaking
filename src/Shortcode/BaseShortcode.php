@@ -11,6 +11,7 @@
 
 namespace AlainSchlesser\Speaking\Shortcode;
 
+use AlainSchlesser\Speaking\Registerable;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\View;
 
@@ -22,7 +23,7 @@ use AlainSchlesser\Speaking\View;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-abstract class BaseShortcode implements Renderable {
+abstract class BaseShortcode implements Renderable, Registerable {
 
 	/**
 	 * Register the Shortcode.
