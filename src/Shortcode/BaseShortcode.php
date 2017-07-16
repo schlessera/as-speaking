@@ -75,6 +75,8 @@ abstract class BaseShortcode implements Renderable {
 	 * Get the tag to use for the shortcode.
 	 *
 	 * @since 0.1.0
+	 *
+	 * @return string Tag of the shortcode.
 	 */
 	abstract protected function get_tag();
 
@@ -82,6 +84,8 @@ abstract class BaseShortcode implements Renderable {
 	 * Get the View URI to use for rendering the shortcode.
 	 *
 	 * @since 0.1.0
+	 *
+	 * @return string View URI.
 	 */
 	abstract protected function get_view_uri();
 
