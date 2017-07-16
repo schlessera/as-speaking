@@ -34,7 +34,9 @@ class InvalidModule extends \InvalidArgumentException implements SpeakingPageExc
 	public static function from_module( $module ) {
 		$message = sprintf(
 			'The module "%s" is not recognized and cannot be registered.',
-			$module
+			is_object( $module )
+				? get_class( $module )
+				: (string) $module
 		);
 
 		return new static( $message );
