@@ -22,7 +22,7 @@ namespace AlainSchlesser\Speaking;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-final class Plugin {
+final class Plugin implements Registerable {
 
 	/**
 	 * Register the plugin with the WordPress system.
@@ -30,12 +30,43 @@ final class Plugin {
 	 * @since 0.1.0
 	 */
 	public function register() {
-		foreach ( $this->get_modules() as $module ) {
-			if ( ! class_exists( $module ) ) {
-				throw Exception\InvalidModule::from_module( $module );
-			}
-			( new $module )->register();
+		add_action( 'plugins_loaded', [ $this, 'register_modules' ] );
+	}
+
+	/**
+	 * Register the individual modules of this plugin.
+	 *
+	 * @since 0.1.0
+	 */
+	public function register_modules() {
+		$modules = $this->get_modules();
+		$modules = array_map( [ $this, 'instantiate_module' ], $modules );
+		array_walk( $modules, function( Registerable $module ) {
+			$module->register();
+		} );
+	}
+
+	/**
+	 * Instantiate a single module.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $class Module class to instantiate.
+	 *
+	 * @return object
+	 */
+	private function instantiate_module( $class ) {
+		if ( ! class_exists( $class ) ) {
+			throw Exception\InvalidModule::from_module( $class );
 		}
+
+		$module = new $class();
+
+		if ( ! $module instanceof Registerable ) {
+			throw Exception\InvalidModule::from_module( $module );
+		}
+
+		return $module;
 	}
 
 	/**
