@@ -80,6 +80,7 @@ final class Plugin implements Registerable {
 		return [
 			Shortcode\SpeakingPage::class,
 			CustomPostType\Talk::class,
+			Metabox\Talk::class,
 		];
 	}
 }
