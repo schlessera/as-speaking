@@ -128,7 +128,7 @@ class View implements Renderable {
 	 * @throws InvalidURI If the provided URI was not valid.
 	 * @throws FailedToLoadView If the view could not be loaded.
 	 */
-	public function renderPartial( $uri, array $context = null ) {
+	public function render_partial( $uri, array $context = null ) {
 		$view = new View( $uri );
 
 		return $view->render( $context ?: $this->_context_ );
