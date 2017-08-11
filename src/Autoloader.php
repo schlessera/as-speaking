@@ -151,7 +151,7 @@ class Autoloader {
 
 			// Require the file if it exists and is readable.
 			if ( is_readable( $filepath ) ) {
-				require( $filepath );
+				require $filepath;
 			}
 		}
 	}
