@@ -11,6 +11,8 @@
 
 namespace AlainSchlesser\Speaking\Shortcode;
 
+use AlainSchlesser\Speaking\Model\TalkRepository;
+
 /**
  * Class SpeakingPage.
  *
@@ -43,22 +45,20 @@ final class SpeakingPage extends BaseShortcode {
 	}
 
 	/**
-	 * Process the shortcode attributes.
+	 * Get the context to pass onto the view.
+	 *
+	 * Override to provide data to the view that is not part of the shortcode
+	 * attributes.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param array|string $atts Raw shortcode attributes passed into the
-	 *                           shortcode function.
+	 * @param array $atts Array of shortcode attributes.
 	 *
-	 * @return array Processed shortcode attributes.
+	 * @return array Context to pass onto view.
 	 */
-	protected function process_attributes( $atts ) {
-		return shortcode_atts(
-			[
-				// Shortcode attributes' default values.
-			],
-			$atts,
-			self::TAG
-		);
+	protected function get_context( $atts ) {
+		$talks = new TalkRepository();
+
+		return [ 'talks' => $talks->find_all() ];
 	}
 }

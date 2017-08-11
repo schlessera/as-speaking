@@ -46,9 +46,10 @@ abstract class BaseShortcode implements Renderable, Registerable {
 	 * @return string Rendered HTML of the shortcode.
 	 */
 	public function process_shortcode( $atts ) {
-		$atts = $this->process_attributes( $atts );
+		$atts    = $this->process_attributes( $atts );
+		$context = $this->get_context( $atts );
 
-		return $this->render( (array) $atts );
+		return $this->render( array_merge( $atts, $context ) );
 	}
 
 	/**
@@ -73,6 +74,44 @@ abstract class BaseShortcode implements Renderable, Registerable {
 	}
 
 	/**
+	 * Process the shortcode attributes.
+	 *
+	 * Override to add accepted attributes and their default values.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array|string $atts Raw shortcode attributes passed into the
+	 *                           shortcode function.
+	 *
+	 * @return array Processed shortcode attributes.
+	 */
+	protected function process_attributes( $atts ) {
+		return shortcode_atts(
+			[
+				// Shortcode attributes' default values.
+			],
+			$atts,
+			$this->get_tag()
+		);
+	}
+
+	/**
+	 * Get the context to pass onto the view.
+	 *
+	 * Override to provide data to the view that is not part of the shortcode
+	 * attributes.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $atts Array of shortcode attributes.
+	 *
+	 * @return array Context to pass onto view.
+	 */
+	protected function get_context( $atts ) {
+		return [];
+	}
+
+	/**
 	 * Get the tag to use for the shortcode.
 	 *
 	 * @since 0.1.0
@@ -89,16 +128,4 @@ abstract class BaseShortcode implements Renderable, Registerable {
 	 * @return string View URI.
 	 */
 	abstract protected function get_view_uri();
-
-	/**
-	 * Process the shortcode attributes.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param array|string $atts Raw shortcode attributes passed into the
-	 *                           shortcode function.
-	 *
-	 * @return array Processed shortcode attributes.
-	 */
-	abstract protected function process_attributes( $atts );
 }

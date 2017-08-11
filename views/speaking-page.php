@@ -13,7 +13,7 @@ namespace AlainSchlesser\Speaking;
 
 ?><h3>Speaking page view</h3>
 <div class="speaking-page-talks">
-	<?php foreach ( [ 'Talk A', 'Talk B', 'Talk C' ] as $talk ) : ?>
-		<?= $this->render_partial( 'views/speaking-page-talk', [ 'title' => $talk ] ) ?>
+	<?php foreach ( $this->talks as $talk ) : ?>
+		<?= $this->render_partial( 'views/speaking-page-talk', [ 'talk' => $talk ] ) ?>
 	<?php endforeach; ?>
 </div>

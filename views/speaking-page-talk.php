@@ -12,6 +12,6 @@
 namespace AlainSchlesser\Speaking;
 
 ?><div class="speaking-page-talk">
-	<h4><?= $this->title ?></h4>
-	<p>Short description of the talk.</p>
+	<h4><?= $this->talk->title() ?></h4>
+	<?= $this->talk->content() ?>
 </div>
