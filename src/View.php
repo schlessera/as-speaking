@@ -11,6 +11,9 @@
 
 namespace AlainSchlesser\Speaking;
 
+use AlainSchlesser\Speaking\Exception\FailedToLoadView;
+use AlainSchlesser\Speaking\Exception\InvalidURI;
+
 /**
  * Class View.
  *
@@ -40,6 +43,15 @@ class View implements Renderable {
 	 * @var string
 	 */
 	protected $uri;
+
+	/**
+	 * Internal storage for passed-in context.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var array
+	 */
+	protected $_context_ = [];
 
 	/**
 	 * Instantiate a View object.
@@ -72,6 +84,10 @@ class View implements Renderable {
 			$this->$key = $value;
 		}
 
+		// Add entire context as array to the current instance to pass onto
+		// partial views.
+		$this->_context_ = $context;
+
 		// Save current buffering level so we can backtrack in case of an error.
 		// This is needed because the view itself might also add an unknown
 		// number of output buffering levels.
@@ -92,6 +108,30 @@ class View implements Renderable {
 		}
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Render a partial view.
+	 *
+	 * This can be used from within a currently rendered view, to include
+	 * nested partials.
+	 *
+	 * The passed-in context is optional, and will fall back to the parent's
+	 * context if omitted.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param            $uri
+	 * @param array|null $context
+	 *
+	 * @return string
+	 * @throws InvalidURI If the provided URI was not valid.
+	 * @throws FailedToLoadView If the view could not be loaded.
+	 */
+	public function renderPartial( $uri, array $context = null ) {
+		$view = new View( $uri );
+
+		return $view->render( $context ?: $this->_context_ );
 	}
 
 	/**
