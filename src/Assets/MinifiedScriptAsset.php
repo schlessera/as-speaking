@@ -35,7 +35,7 @@ class MinifiedScriptAsset extends ScriptAsset {
 	 */
 	protected function normalize_source( $uri, $extension ) {
 		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
-			$extension = ".min{$extension}";
+			$extension = "min.{$extension}";
 		}
 
 		$uri = PathHelper::check_extension( $uri, $extension );
