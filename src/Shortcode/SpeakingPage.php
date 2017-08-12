@@ -11,6 +11,7 @@
 
 namespace AlainSchlesser\Speaking\Shortcode;
 
+use AlainSchlesser\Speaking\Assets\StyleAsset;
 use AlainSchlesser\Speaking\Model\TalkRepository;
 
 /**
@@ -25,6 +26,9 @@ final class SpeakingPage extends BaseShortcode {
 
 	const TAG      = 'speaking_page';
 	const VIEW_URI = 'views/speaking-page';
+
+	const CSS_HANDLE = 'as-speaking-frontend-css';
+	const CSS_URI    = 'assets/styles/as-speaking-frontend';
 
 	/**
 	 * Get the tag to use for the shortcode.
@@ -60,5 +64,21 @@ final class SpeakingPage extends BaseShortcode {
 		$talks = new TalkRepository();
 
 		return [ 'talks' => $talks->find_all() ];
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array<Asset>
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset(
+				self::CSS_HANDLE,
+				self::CSS_URI
+			),
+		];
 	}
 }

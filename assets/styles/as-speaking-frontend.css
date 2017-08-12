@@ -1,0 +1,40 @@
+/*
+ * AlainSchlesser.com Speaking Page Plugin.
+ *
+ * @package   AlainSchlesser\Speaking
+ * @author    Alain Schlesser <alain.schlesser@gmail.com>
+ * @license   MIT
+ * @link      https://www.alainschlesser.com/
+ * @copyright 2017 Alain Schlesser
+ */
+
+.speaking-page-talk-event:before,
+.speaking-page-talk-session:before,
+.speaking-page-talk-video:before,
+.speaking-page-talk-slides:before {
+    color: #82878c;
+    font: normal 20px/1 dashicons;
+    speak: none;
+    display: inline-block;
+    margin-left: -1px;
+    padding-right: 8px;
+    vertical-align: text-bottom;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.speaking-page-talk-event:before {
+    content: "\f319";
+}
+
+.speaking-page-talk-session:before {
+    content: "\f145";
+}
+
+.speaking-page-talk-video:before {
+    content: "\f490";
+}
+
+.speaking-page-talk-slides:before {
+    content: "\f496";
+}

@@ -13,9 +13,11 @@ namespace AlainSchlesser\Speaking\Metabox;
 
 use AlainSchlesser\Speaking\Assets\AssetsAware;
 use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
+use AlainSchlesser\Speaking\Model\TalkRepository;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\View;
+use Closure;
 
 /**
  * Abstract class BaseMetabox.
@@ -44,6 +46,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 */
 	public function register() {
 		$this->register_assets();
+		$this->register_persistence_hooks();
 
 		add_action( 'init', function () {
 			add_meta_box(
@@ -65,10 +68,12 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	 *
 	 * @param array|string $atts Attributes as passed to the metabox.
 	 *
-	 * @return string Rendered HTML of the metabox.
+	 * @return void The rendered content needs to be echoed.
 	 */
 	public function process_metabox( $atts ) {
-		$atts = $this->process_attributes( $atts );
+		$atts                = $this->process_attributes( $atts );
+		$atts['metabox_id']  = $this->get_id();
+		$atts['nonce_field'] = $this->render_nonce();
 
 		echo $this->render( (array) $atts );
 	}
@@ -97,6 +102,70 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 				$exception->getMessage()
 			);
 		}
+	}
+
+	/**
+	 * Render the nonce.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string Hidden field with a nonce.
+	 */
+	protected function render_nonce() {
+		ob_start();
+
+		wp_nonce_field(
+			$this->get_nonce_action(),
+			$this->get_nonce_name()
+		);
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Verify the nonce and return the result.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return bool Whether the nonce could be successfully verified.
+	 */
+	protected function verify_nonce() {
+		$nonce_name = $this->get_nonce_name();
+
+		if ( ! array_key_exists( $nonce_name, $_POST ) ) {
+			return false;
+		}
+
+		$nonce = $_POST[ $nonce_name ];
+
+		$result = wp_verify_nonce(
+			$nonce,
+			$this->get_nonce_action()
+		);
+
+		return false !== $result;
+	}
+
+	/**
+	 * Get the action of the nonce to use.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string Action of the nonce.
+	 */
+	protected function get_nonce_action() {
+		return "{$this->get_id()}_action";
+	}
+
+	/**
+	 * Get the name of the nonce to use.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string Name of the nonce.
+	 */
+	protected function get_nonce_name() {
+		return "{$this->get_id()}_nonce";
 	}
 
 	/**
@@ -160,6 +229,67 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	protected function get_callback_args() {
 		return [];
 	}
+
+	/**
+	 * Register the persistence hooks to be triggered by a save attempt.
+	 *
+	 * @since 0.1.0
+	 */
+	protected function register_persistence_hooks() {
+		$closure = $this->get_persistence_closure();
+		add_action( 'save_post', $closure );
+	}
+
+	/**
+	 * Return the persistence closure.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return Closure
+	 */
+	protected function get_persistence_closure() {
+		return function ( $post_id ) {
+			// Verify nonce and bail early if it doesn't verify.
+			if ( ! $this->verify_nonce() ) {
+				return $post_id;
+			}
+
+			// Bail early if this is an autosave.
+			if ( wp_is_post_autosave( $post_id ) ) {
+				return $post_id;
+			}
+
+			// Bail early if this is a revision.
+			if ( wp_is_post_revision( $post_id ) ) {
+				return $post_id;
+			}
+
+			// Check the user's permissions.
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				return $post_id;
+			}
+
+			// Check if there was a multisite switch before.
+			if ( is_multisite() && ms_is_switched() ) {
+				return $post_id;
+			}
+
+			$this->persist( $post_id );
+
+			return $post_id;
+		};
+	}
+
+	/**
+	 * Do the actual persistence of the changed data.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param int $post_id ID of the post to persist.
+	 *
+	 * @return void
+	 */
+	abstract protected function persist( $post_id );
 
 	/**
 	 * Get the View URI to use for rendering the metabox.

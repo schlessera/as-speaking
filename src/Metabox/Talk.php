@@ -14,6 +14,7 @@ namespace AlainSchlesser\Speaking\Metabox;
 use AlainSchlesser\Speaking\Assets\ScriptAsset;
 use AlainSchlesser\Speaking\Assets\StyleAsset;
 use AlainSchlesser\Speaking\CustomPostType\Talk as TalkCPT;
+use AlainSchlesser\Speaking\Model\TalkRepository;
 
 /**
  * Abstract class BaseMetabox.
@@ -25,7 +26,7 @@ use AlainSchlesser\Speaking\CustomPostType\Talk as TalkCPT;
  */
 final class Talk extends BaseMetabox {
 
-	const ID       = 'talk-cpt';
+	const ID       = 'talk_cpt_metabox';
 	const VIEW_URI = 'views/talk-metabox';
 
 	const CSS_HANDLE = 'as-speaking-backend-css';
@@ -33,12 +34,6 @@ final class Talk extends BaseMetabox {
 
 	const JS_HANDLE = 'as-speaking-backend-js';
 	const JS_URI    = 'assets/scripts/as-speaking-backend';
-
-	const IMAGE_LINK_NOTHING = 'nothing';
-	const IMAGE_LINK_EVENT   = 'event';
-	const IMAGE_LINK_SESSION = 'session';
-	const IMAGE_LINK_VIDEO   = 'video';
-	const IMAGE_LINK_SLIDES  = 'slides';
 
 	/**
 	 * Get the ID to use for the metabox.
@@ -140,15 +135,26 @@ final class Talk extends BaseMetabox {
 	 * @return array Processed metabox attributes.
 	 */
 	protected function process_attributes( $atts ) {
-		$atts = (array) $atts;
-		$atts['event_name'] = 'WordCamp Europe 2017';
-		$atts['event_link'] = '';
-		$atts['session_date'] = '16.06.2017';
-		$atts['session_link'] = '';
-		$atts['video'] = 'https://wordpress.tv/2017/06/22/alain-schlesser-demystifying-the-wordpress-bootstrap-process/';
-		$atts['slides'] = 'https://schlessera.github.io/wceu-2017/';
-		$atts['image_link'] = self::IMAGE_LINK_VIDEO;
+		$talks        = new TalkRepository();
+		$atts         = (array) $atts;
+		$atts['talk'] = $talks->find( get_the_ID() );
 
 		return $atts;
+	}
+
+	/**
+	 * Do the actual persistence of the changed data.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param int $post_id ID of the post to persist.
+	 *
+	 * @return void
+	 */
+	protected function persist( $post_id ) {
+		$talks = new TalkRepository();
+		$talk  = $talks->find( $post_id );
+		$talk->parse_post_data( $_POST );
+		$talk->save_meta();
 	}
 }
