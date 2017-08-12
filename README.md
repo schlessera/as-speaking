@@ -6,6 +6,16 @@ The main reason why I developed this plugin is because I needed something to tal
 
 This plugin is currently active on my personal blog, and you can see the output on my [Speaking Page](https://www.alainschlesser.com/speaking/).
 
+## Basic usage
+
+Adding and editing talks should be pretty straight-forward.
+
+The talks will automatically be ordered by date, and showed as either "Upcoming Talks" or "Past Talks".
+
+## Customizing
+
+If you want to override the markup fom within your theme, just create a `views` folder in your (parent or child) theme and copy the file from the plugin's `views` folder in there. You can then change that copied file as needed.
+
 ## Screenshots
 
 ### List view of the added talks
