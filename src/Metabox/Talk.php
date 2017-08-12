@@ -69,28 +69,37 @@ final class Talk extends BaseMetabox {
 	 * @return array<Asset>
 	 */
 	protected function get_assets() {
+
+		$date_formatter_script = new MinifiedScriptAsset(
+			self::DATE_FORMATTER_JS_HANDLE,
+			self::DATE_FORMATTER_JS_URI,
+			[],
+			false,
+			ScriptAsset::ENQUEUE_FOOTER
+		);
+
+		$metabox_style = new StyleAsset(
+			self::CSS_HANDLE,
+			self::CSS_URI
+		);
+
+		$metabox_script = new ScriptAsset(
+			self::JS_HANDLE,
+			self::JS_URI,
+			[ 'jquery', self::DATE_FORMATTER_JS_HANDLE ],
+			false,
+			ScriptAsset::ENQUEUE_FOOTER
+		);
+
+		$metabox_script->add_localization(
+			'speakingPageMetabox',
+			[ 'dateFormat' => get_option( 'date_format' ) ]
+		);
+
 		return [
-			new StyleAsset(
-				self::CSS_HANDLE,
-				self::CSS_URI
-			),
-			new MinifiedScriptAsset(
-				self::DATE_FORMATTER_JS_HANDLE,
-				self::DATE_FORMATTER_JS_URI,
-				[],
-				false,
-				ScriptAsset::ENQUEUE_FOOTER
-			),
-			( new ScriptAsset(
-				self::JS_HANDLE,
-				self::JS_URI,
-				[ 'jquery', self::DATE_FORMATTER_JS_HANDLE ],
-				false,
-				ScriptAsset::ENQUEUE_FOOTER
-			) )->add_localization(
-				'speakingPageMetabox',
-				[ 'dateFormat' => get_option( 'date_format' ) ]
-			),
+			$date_formatter_script,
+			$metabox_script,
+			$metabox_style,
 		];
 	}
 
