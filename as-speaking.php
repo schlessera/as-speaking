@@ -12,7 +12,7 @@
  * Plugin Name: AlainSchlesser.com Speaking Page Plugin.
  * Plugin URI:  https://www.alainschlesser.com/
  * Description: Custom post type and presentation tools for a page to promote your speaking gigs.
- * Version:     0.1.0
+ * Version:     0.1.7
  * Author:      Alain Schlesser <alain.schlesser@gmail.com>
  * Author URI:  https://www.alainschlesser.com/
  * Text Domain: as-speaking
