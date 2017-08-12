@@ -11,8 +11,10 @@
 
 namespace AlainSchlesser\Speaking\Metabox;
 
-use AlainSchlesser\Speaking\Registerable;
+use AlainSchlesser\Speaking\Assets\AssetsAware;
+use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
 use AlainSchlesser\Speaking\Renderable;
+use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\View;
 
 /**
@@ -23,7 +25,9 @@ use AlainSchlesser\Speaking\View;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-abstract class BaseMetabox implements Renderable, Registerable {
+abstract class BaseMetabox implements Renderable, Service, AssetsAware {
+
+	use AssetsAwareTrait;
 
 	const CONTEXT_ADVANCED = 'advanced';
 	const CONTEXT_NORMAL   = 'normal';
@@ -39,6 +43,8 @@ abstract class BaseMetabox implements Renderable, Registerable {
 	 * @since 0.1.0
 	 */
 	public function register() {
+		$this->register_assets();
+
 		add_action( 'init', function () {
 			add_meta_box(
 				$this->get_id(),
@@ -78,6 +84,8 @@ abstract class BaseMetabox implements Renderable, Registerable {
 	 */
 	public function render( array $context = [] ) {
 		try {
+			$this->enqueue_assets();
+
 			$view = new View( $this->get_view_uri() );
 
 			return $view->render( $context );

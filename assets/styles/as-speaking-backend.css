@@ -1,0 +1,70 @@
+/*
+ * AlainSchlesser.com Speaking Page Plugin.
+ *
+ * @package   AlainSchlesser\Speaking
+ * @author    Alain Schlesser <alain.schlesser@gmail.com>
+ * @license   MIT
+ * @link      https://www.alainschlesser.com/
+ * @copyright 2017 Alain Schlesser
+ */
+
+.talk-cpt-metabox-section {
+    padding: 6px 0 8px;
+}
+
+.talk-cpt-metabox-section input[type="text"] {
+    width: 100%;
+}
+
+.talk-cpt-metabox-section .button-edit:before,
+.talk-cpt-metabox-section-event:before,
+.talk-cpt-metabox-section-session:before,
+.talk-cpt-metabox-section-video:before,
+.talk-cpt-metabox-section-slides:before,
+.talk-cpt-metabox-section-featured-image:before {
+    color: #82878c;
+    font: normal 20px/1 dashicons;
+    speak: none;
+    display: inline-block;
+    margin-left: -1px;
+    padding-right: 3px;
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.talk-cpt-metabox-section .button-edit {
+    font-size: 0;
+}
+
+.talk-cpt-metabox-section .button-edit:before {
+    color: inherit;
+    content: "\f464";
+}
+
+.talk-cpt-metabox-section-event:before {
+    content: "\f319";
+}
+
+.talk-cpt-metabox-section-session:before {
+    content: "\f145";
+}
+
+.talk-cpt-metabox-section-video:before {
+    content: "\f490";
+}
+
+.talk-cpt-metabox-section-slides:before {
+    content: "\f496";
+}
+
+.talk-cpt-metabox-section-featured-image:before {
+    content: "\f128";
+}
+#talk-cpt-event-display,
+#talk-cpt-session-display,
+#talk-cpt-video-display,
+#talk-cpt-slides-display,
+#talk-cpt-image-link-display {
+    font-weight: 600;
+}

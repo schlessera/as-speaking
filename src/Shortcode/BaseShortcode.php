@@ -11,8 +11,10 @@
 
 namespace AlainSchlesser\Speaking\Shortcode;
 
-use AlainSchlesser\Speaking\Registerable;
+use AlainSchlesser\Speaking\Assets\AssetsAware;
+use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
 use AlainSchlesser\Speaking\Renderable;
+use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\View;
 
 /**
@@ -23,7 +25,9 @@ use AlainSchlesser\Speaking\View;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-abstract class BaseShortcode implements Renderable, Registerable {
+abstract class BaseShortcode implements Renderable, AssetsAware, Service {
+
+	use AssetsAwareTrait;
 
 	/**
 	 * Register the Shortcode.

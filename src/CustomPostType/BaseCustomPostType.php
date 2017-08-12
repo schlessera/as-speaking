@@ -11,7 +11,7 @@
 
 namespace AlainSchlesser\Speaking\CustomPostType;
 
-use AlainSchlesser\Speaking\Registerable;
+use AlainSchlesser\Speaking\Service;
 
 /**
  * Abstract class BaseCustomPostType.
@@ -21,7 +21,7 @@ use AlainSchlesser\Speaking\Registerable;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-abstract class BaseCustomPostType implements Registerable {
+abstract class BaseCustomPostType implements Service {
 
 	/**
 	 * Register the custom post type.

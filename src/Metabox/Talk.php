@@ -11,6 +11,8 @@
 
 namespace AlainSchlesser\Speaking\Metabox;
 
+use AlainSchlesser\Speaking\Assets\ScriptAsset;
+use AlainSchlesser\Speaking\Assets\StyleAsset;
 use AlainSchlesser\Speaking\CustomPostType\Talk as TalkCPT;
 
 /**
@@ -25,6 +27,18 @@ final class Talk extends BaseMetabox {
 
 	const ID       = 'talk-cpt';
 	const VIEW_URI = 'views/talk-metabox';
+
+	const CSS_HANDLE = 'as-speaking-backend-css';
+	const CSS_URI    = 'assets/styles/as-speaking-backend';
+
+	const JS_HANDLE = 'as-speaking-backend-js';
+	const JS_URI    = 'assets/scripts/as-speaking-backend';
+
+	const IMAGE_LINK_NOTHING = 'nothing';
+	const IMAGE_LINK_EVENT   = 'event';
+	const IMAGE_LINK_SESSION = 'session';
+	const IMAGE_LINK_VIDEO   = 'video';
+	const IMAGE_LINK_SLIDES  = 'slides';
 
 	/**
 	 * Get the ID to use for the metabox.
@@ -46,6 +60,29 @@ final class Talk extends BaseMetabox {
 	 */
 	protected function get_title() {
 		return __( 'Talk properties', 'as-speaking' );
+	}
+
+	/**
+	 * Get the array of known assets.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return array<Asset>
+	 */
+	protected function get_assets() {
+		return [
+			new StyleAsset(
+				self::CSS_HANDLE,
+				self::CSS_URI
+			),
+			new ScriptAsset(
+				self::JS_HANDLE,
+				self::JS_URI,
+				[ 'jquery' ],
+				$version = false,
+				ScriptAsset::ENQUEUE_FOOTER
+			),
+		];
 	}
 
 	/**
@@ -82,17 +119,6 @@ final class Talk extends BaseMetabox {
 	}
 
 	/**
-	 * Get the array of arguments to pass to the render callback.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return array Array of arguments.
-	 */
-	protected function get_callback_args() {
-		return [];
-	}
-
-	/**
 	 * Get the View URI to use for rendering the metabox.
 	 *
 	 * @since 0.1.0
@@ -114,6 +140,15 @@ final class Talk extends BaseMetabox {
 	 * @return array Processed metabox attributes.
 	 */
 	protected function process_attributes( $atts ) {
+		$atts = (array) $atts;
+		$atts['event_name'] = 'WordCamp Europe 2017';
+		$atts['event_link'] = '';
+		$atts['session_date'] = '16.06.2017';
+		$atts['session_link'] = '';
+		$atts['video'] = 'https://wordpress.tv/2017/06/22/alain-schlesser-demystifying-the-wordpress-bootstrap-process/';
+		$atts['slides'] = 'https://schlessera.github.io/wceu-2017/';
+		$atts['image_link'] = self::IMAGE_LINK_VIDEO;
+
 		return $atts;
 	}
 }

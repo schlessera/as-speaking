@@ -11,6 +11,9 @@
 
 namespace AlainSchlesser\Speaking;
 
+use AlainSchlesser\Speaking\Assets\AssetsAware;
+use AlainSchlesser\Speaking\Assets\AssetsHandler;
+
 /**
  * Class Plugin.
  *
@@ -25,12 +28,23 @@ namespace AlainSchlesser\Speaking;
 final class Plugin implements Registerable {
 
 	/**
+	 * Assets handler instance.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var AssetsHandler
+	 */
+	private $assets_handler;
+
+	/**
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since 0.1.0
 	 */
 	public function register() {
+		$this->assets_handler = new AssetsHandler();
 		add_action( 'plugins_loaded', [ $this, 'register_services' ] );
+		add_action( 'init', [ $this, 'register_assets_handler' ] );
 	}
 
 	/**
@@ -41,9 +55,18 @@ final class Plugin implements Registerable {
 	public function register_services() {
 		$services = $this->get_services();
 		$services = array_map( [ $this, 'instantiate_service' ], $services );
-		array_walk( $services, function( Registerable $service ) {
+		array_walk( $services, function ( Service $service ) {
 			$service->register();
 		} );
+	}
+
+	/**
+	 * Register the assets handler.
+	 *
+	 * @since 0.1.0
+	 */
+	public function register_assets_handler() {
+		$this->assets_handler->register();
 	}
 
 	/**
@@ -53,7 +76,7 @@ final class Plugin implements Registerable {
 	 *
 	 * @param string $class Service class to instantiate.
 	 *
-	 * @return object
+	 * @return Service
 	 */
 	private function instantiate_service( $class ) {
 		if ( ! class_exists( $class ) ) {
@@ -62,8 +85,12 @@ final class Plugin implements Registerable {
 
 		$service = new $class();
 
-		if ( ! $service instanceof Registerable ) {
+		if ( ! $service instanceof Service ) {
 			throw Exception\InvalidService::from_service( $service );
+		}
+
+		if ( $service instanceof AssetsAware ) {
+			$service->with_assets_handler( $this->assets_handler );
 		}
 
 		return $service;

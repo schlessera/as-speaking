@@ -12,28 +12,29 @@
 namespace AlainSchlesser\Speaking\Exception;
 
 /**
- * Class InvalidPostID.
+ * Class InvalidAssetHandle.
  *
  * @since   0.1.0
  *
  * @package AlainSchlesser\Speaking\Exception
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class InvalidPostID extends \InvalidArgumentException implements SpeakingPageException {
+class InvalidAssetHandle extends \InvalidArgumentException implements SpeakingPageException {
 
 	/**
-	 * Create a new instance of the exception for a post ID that is not valid.
+	 * Create a new instance of the exception for a asset handle that is not
+	 * valid.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param int $id Post ID that is not valid.
+	 * @param int $handle Asset handle that is not valid.
 	 *
 	 * @return static
 	 */
-	public static function from_id( $id ) {
+	public static function from_handle( $handle ) {
 		$message = sprintf(
-			'The post ID "%d" is not valid.',
-			$id
+			'The asset handle "%s" is not valid.',
+			$handle
 		);
 
 		return new static( $message );
