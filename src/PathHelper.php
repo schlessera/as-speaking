@@ -19,7 +19,7 @@ namespace AlainSchlesser\Speaking;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class PathHelper {
+final class PathHelper {
 
 	/**
 	 * Regex pattern to detect whether an URI is absolute or not.
@@ -42,7 +42,8 @@ class PathHelper {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param string $uri URI to check the extension of.
+	 * @param string $uri       URI to check the extension of.
+	 * @param string $extension Extension to use.
 	 *
 	 * @return string URI with correct extension.
 	 */
@@ -64,7 +65,8 @@ class PathHelper {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param string $uri URI to make absolute.
+	 * @param string $uri  URI to make absolute.
+	 * @param string $root Root folder to use.
 	 *
 	 * @return string Absolute URI.
 	 */

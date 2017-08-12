@@ -22,7 +22,7 @@ namespace AlainSchlesser\Speaking;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class Autoloader {
+final class Autoloader {
 
 	/**
 	 * Array containing the registered namespace structures
@@ -31,7 +31,7 @@ class Autoloader {
 	 *
 	 * @var array
 	 */
-	protected $namespaces = [];
+	private $namespaces = [];
 
 	/**
 	 * Destructor for the Autoloader class.
@@ -165,7 +165,7 @@ class Autoloader {
 	 *
 	 * @return string Normalized namespace root.
 	 */
-	protected function normalize_root( $root ) {
+	private function normalize_root( $root ) {
 		$root = $this->remove_leading_backslash( $root );
 
 		return $this->add_trailing_backslash( $root );
@@ -180,7 +180,7 @@ class Autoloader {
 	 *
 	 * @return string Modified string.
 	 */
-	protected function remove_leading_backslash( $string ) {
+	private function remove_leading_backslash( $string ) {
 		return ltrim( $string, '\\' );
 	}
 
@@ -193,7 +193,7 @@ class Autoloader {
 	 *
 	 * @return string Modified string.
 	 */
-	protected function add_trailing_backslash( $string ) {
+	private function add_trailing_backslash( $string ) {
 		return rtrim( $string, '\\' ) . '\\';
 	}
 }

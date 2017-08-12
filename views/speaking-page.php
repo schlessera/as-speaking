@@ -11,12 +11,14 @@
 
 namespace AlainSchlesser\Speaking;
 
+use AlainSchlesser\Speaking\Model\Talk;
+
 $upcoming_header = false;
 $past_header     = false;
 $timestamp       = time();
 
 ?><div class="speaking-page-talks">
-	<?php foreach ( $this->talks as $talk ) : ?>
+	<?php foreach ( $this->talks as $talk ) :  /** @var Talk $talk */ ?>
 		<?php if ( ! $upcoming_header && $talk->get_session_date() >= $timestamp ) { ?>
 			<h3><?= __( 'Upcoming Talks', 'as-speaking' ) ?></h3>
 			<?php $upcoming_header = true; ?>

@@ -22,7 +22,7 @@ use AlainSchlesser\Speaking\Registerable;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class AssetsHandler implements Registerable {
+final class AssetsHandler implements Registerable {
 
 	/**
 	 * Assets known to this asset handler.
@@ -31,7 +31,7 @@ class AssetsHandler implements Registerable {
 	 *
 	 * @var array<Asset>
 	 */
-	protected $assets;
+	private $assets;
 
 	/**
 	 * Add a single asset to the asset handler.
