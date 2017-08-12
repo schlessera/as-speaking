@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
 
     // Update "Session:" to currently configured session.
     if (sessionLink) {
-      sessionDisplayHtml = '<a href="' + sessionLink + '">' + sessionDate + '</a>';
+      sessionDisplayHtml = '<a href="' + sessionLink + '">' + sessionDisplayHtml + '</a>';
     }
 
     $('#talk-cpt-session-display').html(sessionDisplayHtml);
