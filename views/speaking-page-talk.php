@@ -14,7 +14,7 @@ namespace AlainSchlesser\Speaking;
 ?><div class="speaking-page-talk">
 	<div class="speaking-page-talk-featured-image"><?= $this->talk->get_featured_image() ?></div>
 	<h4 class="speaking-page-talk-title"><?= $this->talk->get_title() ?></h4>
-	<p class="speaking-page-talk-meta" style="color: grey;">
+	<p class="speaking-page-talk-meta">
 		<?php if ( ! empty( $this->talk->get_event_name() ) ) : ?>
 			<div class="speaking-page-talk-event"><a href="<?= $this->talk->get_event_link() ?>"><?= $this->talk->get_event_name() ?></a></div>
 		<?php endif; ?>
