@@ -15,7 +15,7 @@ use AlainSchlesser\Speaking\Assets\AssetsAware;
 use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
-use AlainSchlesser\Speaking\View;
+use AlainSchlesser\Speaking\TemplatedView;
 
 /**
  * Abstract class BaseShortcode.
@@ -71,7 +71,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 		try {
 			$this->enqueue_assets();
 
-			$view = new View( $this->get_view_uri() );
+			$view = new TemplatedView( $this->get_view_uri() );
 
 			return $view->render( $context );
 		} catch ( \Exception $exception ) {

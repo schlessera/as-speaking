@@ -129,7 +129,7 @@ class View implements Renderable {
 	 * @throws FailedToLoadView If the view could not be loaded.
 	 */
 	public function render_partial( $uri, array $context = null ) {
-		$view = new View( $uri );
+		$view = new static( $uri );
 
 		return $view->render( $context ?: $this->_context_ );
 	}
