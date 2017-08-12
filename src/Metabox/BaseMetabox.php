@@ -13,7 +13,6 @@ namespace AlainSchlesser\Speaking\Metabox;
 
 use AlainSchlesser\Speaking\Assets\AssetsAware;
 use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
-use AlainSchlesser\Speaking\Model\TalkRepository;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\View;
