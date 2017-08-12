@@ -6,10 +6,18 @@ This plugin is currently active on my personal blog, and you can see the output 
 
 ## Screenshots
 
+### List view of the added talks
+
 ![List view of the added talks](/assets/images/screenshot-1.png)
+
+### Metabox in talk edit screen
 
 ![Metabox in talk edit screen](/assets/images/screenshot-2.png)
 
+### Expanded metabox showing all properties
+
 ![Expanded metabox showing all properties](/assets/images/screenshot-3.png)
+
+### Frontend rendering
 
 ![Frontend rendering](/assets/images/screenshot-4.png)
