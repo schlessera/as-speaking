@@ -1,6 +1,8 @@
 # Speaking Page Plugin
 
-Custom post type and presentation tools for a page to promote your speaking gigs.
+> Custom post type and presentation tools for a page to promote your speaking gigs.
+
+The main reason why I developed this plugin is because I needed something to talk about at [WordCamp Nijmegen 2017](https://2017.nijmegen.wordcamp.org/session/oop-plugin-development-basics/).
 
 This plugin is currently active on my personal blog, and you can see the output on my [Speaking Page](https://www.alainschlesser.com/speaking/).
 
