@@ -26,7 +26,7 @@ $image_link_captions = [
 		<span class="screen-reader-text"><?= __('Edit featured image link', 'as-speaking' ) ?></span></a>
 	<div id="talk-cpt-image-link-select" class="hide-if-js" style="display: none;">
 		<input type="hidden" name="hidden_talk_cpt_image_link" id="hidden_talk_cpt_image_link" value="<?= $this->talk->get_image_link() ?>">
-		<label for="talk_cpt_image_link" class="screen-reader-text"><?= __('Set element the featured image will link to', 'as-speaking' ) ?></label>
+		<label for="talk_cpt_image_link" class="screen-reader-text"><?= __('Element the featured image will link to.', 'as-speaking' ) ?></label>
 		<select name="talk_cpt_image_link" id="talk_cpt_image_link">
 			<?php foreach( $image_link_captions as $value => $caption ) : ?>
 				<option <?php selected( $this->talk->get_image_link(), $value ); ?> value="<?= $value ?>"><?= $caption ?></option>

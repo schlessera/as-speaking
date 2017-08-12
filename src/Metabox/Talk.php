@@ -11,6 +11,7 @@
 
 namespace AlainSchlesser\Speaking\Metabox;
 
+use AlainSchlesser\Speaking\Assets\MinifiedScriptAsset;
 use AlainSchlesser\Speaking\Assets\ScriptAsset;
 use AlainSchlesser\Speaking\Assets\StyleAsset;
 use AlainSchlesser\Speaking\CustomPostType\Talk as TalkCPT;
@@ -34,6 +35,9 @@ final class Talk extends BaseMetabox {
 
 	const JS_HANDLE = 'as-speaking-backend-js';
 	const JS_URI    = 'assets/scripts/as-speaking-backend';
+
+	const DATE_FORMATTER_JS_HANDLE = 'php-date-formatter-js';
+	const DATE_FORMATTER_JS_URI    = 'assets/scripts/php-date-formatter';
 
 	/**
 	 * Get the ID to use for the metabox.
@@ -70,12 +74,22 @@ final class Talk extends BaseMetabox {
 				self::CSS_HANDLE,
 				self::CSS_URI
 			),
-			new ScriptAsset(
+			new MinifiedScriptAsset(
+				self::DATE_FORMATTER_JS_HANDLE,
+				self::DATE_FORMATTER_JS_URI,
+				[],
+				false,
+				ScriptAsset::ENQUEUE_FOOTER
+			),
+			( new ScriptAsset(
 				self::JS_HANDLE,
 				self::JS_URI,
-				[ 'jquery' ],
-				$version = false,
+				[ 'jquery', self::DATE_FORMATTER_JS_HANDLE ],
+				false,
 				ScriptAsset::ENQUEUE_FOOTER
+			) )->add_localization(
+				'speakingPageMetabox',
+				[ 'dateFormat' => get_option( 'date_format' ) ]
 			),
 		];
 	}

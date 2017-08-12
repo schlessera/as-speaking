@@ -8,6 +8,8 @@
  * @copyright 2017 Alain Schlesser
  */
 
+/* global speakingPageMetabox */
+
 jQuery(document).ready(function ($) {
   var $talkCPTEventFields = $('#talk-cpt-event-fields');
   var $talkCPTSessionFields = $('#talk-cpt-session-fields');
@@ -87,7 +89,12 @@ jQuery(document).ready(function ($) {
     var talkCPTSessionLink = $('#talk_cpt_session_link');
     var sessionDate = talkCPTSessionDate.val();
     var sessionLink = talkCPTSessionLink.val();
-    var sessionDisplayHtml = sessionDate;
+    var aa = $('#talk_cpt_session_aa').val();
+    var mm = $('#talk_cpt_session_mm').val();
+    var jj = $('#talk_cpt_session_jj').val();
+    var attemptedDate = new Date( aa, mm - 1, jj );
+    var dateFormatter = new DateFormatter();
+    var sessionDisplayHtml = dateFormatter.formatDate( attemptedDate, speakingPageMetabox.dateFormat );
 
     if (talkCPTSessionDate.is(':hidden') || talkCPTSessionLink.is(':hidden')) {
       $('.edit-talk-cpt-session').show();
@@ -131,6 +138,9 @@ jQuery(document).ready(function ($) {
       $talkCPTSessionFields.slideUp('fast')
         .siblings('a.edit-talk-cpt-session').show().focus();
       $('#talk_cpt_session_date').val($('#hidden_talk_cpt_session_date').val());
+			$('#talk_cpt_session_mm').val($('#hidden_talk_cpt_session_mm').val());
+			$('#talk_cpt_session_jj').val($('#hidden_talk_cpt_session_jj').val());
+			$('#talk_cpt_session_aa').val($('#hidden_talk_cpt_session_aa').val());
       $('#talk_cpt_session_link').val($('#hidden_talk_cpt_session_link').val());
       updateSession();
       event.preventDefault();

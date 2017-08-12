@@ -24,7 +24,7 @@ $video_display = empty( $this->talk->get_video() )
 		<span class="screen-reader-text"><?= __('Edit video', 'as-speaking' ) ?></span></a>
 	<div id="talk-cpt-video-input" class="hide-if-js" style="display: none;">
 		<input type="hidden" name="hidden_talk_cpt_video" id="hidden_talk_cpt_video" value="<?= $this->talk->get_video() ?>">
-		<label for="talk_cpt_video"><?= __('Set the link to the video recording:', 'as-speaking' ) ?></label>
+		<label for="talk_cpt_video"><?= __('URL pointing to the video recording:', 'as-speaking' ) ?></label>
 		<input type="text" id="talk_cpt_video" name="talk_cpt_video" value="<?= $this->talk->get_video() ?>">
 		<a href="#talk_cpt_video" class="save-talk-cpt-video hide-if-no-js button"><?= __( 'OK', 'as-speaking' ) ?></a>
 		<a href="#talk_cpt_video" class="cancel-talk-cpt-video hide-if-no-js button-cancel"><?= __( 'Cancel', 'as-speaking' ) ?></a>

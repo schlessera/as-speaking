@@ -24,7 +24,7 @@ $slides_display = empty( $this->talk->get_slides() )
 		<span class="screen-reader-text"><?= __('Edit slides', 'as-speaking' ) ?></span></a>
 	<div id="talk-cpt-slides-input" class="hide-if-js" style="display: none;">
 		<input type="hidden" name="hidden_talk_cpt_slides" id="hidden_talk_cpt_slides" value="<?= $this->talk->get_slides() ?>">
-		<label for="talk_cpt_slides"><?= __('Set the link to the slides:', 'as-speaking' ) ?></label>
+		<label for="talk_cpt_slides"><?= __('URL pointing to the slides:', 'as-speaking' ) ?></label>
 		<input type="text" id="talk_cpt_slides" name="talk_cpt_slides" value="<?= $this->talk->get_slides() ?>">
 		<a href="#talk_cpt_slides" class="save-talk-cpt-slides hide-if-no-js button"><?= __( 'OK', 'as-speaking' ) ?></a>
 		<a href="#talk_cpt_slides" class="cancel-talk-cpt-slides hide-if-no-js button-cancel"><?= __( 'Cancel', 'as-speaking' ) ?></a>

@@ -68,3 +68,25 @@
 #talk-cpt-image-link-display {
     font-weight: 600;
 }
+
+#talk_cpt_session_aa,
+#talk_cpt_session_jj {
+	padding: 1px;
+	font-size: 12px;
+}
+
+#talk_cpt_session_jj {
+	width: 2em;
+}
+
+#talk_cpt_session_aa {
+	width: 3.4em;
+}
+
+#talk_cpt_session_mm {
+    height: 21px;
+    line-height: 14px;
+    padding: 0;
+    vertical-align: top;
+    font-size: 12px;
+}

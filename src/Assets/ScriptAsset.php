@@ -65,6 +65,15 @@ class ScriptAsset extends BaseAsset {
 	protected $in_footer;
 
 	/**
+	 * Localization data that is added to the JS space.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @var array
+	 */
+	protected $localizations = [];
+
+	/**
 	 * Instantiate a ScriptAsset object.
 	 *
 	 * @since 0.1.0
@@ -95,6 +104,22 @@ class ScriptAsset extends BaseAsset {
 	}
 
 	/**
+	 * Add a localization to the script.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $object_name Name of the object to create in JS space.
+	 * @param array  $data_array  Array of data to attach to the object.
+	 *
+	 * @return static
+	 */
+	public function add_localization( $object_name, $data_array ) {
+		$this->localizations[ $object_name ] = $data_array;
+
+		return $this;
+	}
+
+	/**
 	 * Get the enqueue closure to use.
 	 *
 	 * @since 0.1.0
@@ -110,6 +135,10 @@ class ScriptAsset extends BaseAsset {
 				$this->version,
 				$this->in_footer
 			);
+
+			foreach ( $this->localizations as $object_name => $data_array ) {
+				wp_localize_script( $this->handle, $object_name, $data_array );
+			}
 		};
 	}
 

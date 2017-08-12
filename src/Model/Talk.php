@@ -429,6 +429,13 @@ class Talk {
 		foreach ( $this->get_meta_properties() as $key => $default ) {
 			$this->$key = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . $key ] );
 		}
+
+		$aa = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_aa' ] );
+		$mm = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_mm' ] );
+		$jj = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_jj' ] );
+
+		$date = new \DateTimeImmutable("$aa-$mm-$jj" );
+		$this->session_date = $date->getTimestamp();
 	}
 
 	/**
