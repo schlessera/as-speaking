@@ -28,5 +28,5 @@ namespace AlainSchlesser\Speaking;
 			<div class="speaking-page-talk-slides"><a href="<?= $this->talk->get_slides() ?>"><?= __( 'Slides', 'as-speaking' ) ?></a></div>
 		<?php endif; ?>
 	</p>
-	<div class="speaking-page-talk-content"><?= $this->talk->get_content() ?></div>
+	<div class="speaking-page-talk-content"><?= wpautop( $this->talk->get_content() ) ?></div>
 </div>
