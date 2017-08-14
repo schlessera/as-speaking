@@ -11,14 +11,14 @@
 
 namespace AlainSchlesser\Speaking;
 
-use AlainSchlesser\Speaking\Model\Talk;
+use AlainSchlesser\Speaking\Model\TalkMeta;
 
 $image_link_captions = [
-	Talk::IMAGE_LINK_NOTHING => __( 'Nothing', 'as-speaking' ),
-	Talk::IMAGE_LINK_EVENT   => __( 'Event', 'as-speaking' ),
-	Talk::IMAGE_LINK_SESSION => __( 'Session', 'as-speaking' ),
-	Talk::IMAGE_LINK_VIDEO   => __( 'Video', 'as-speaking' ),
-	Talk::IMAGE_LINK_SLIDES  => __( 'Slides', 'as-speaking' ),
+	TalkMeta::IMAGE_LINK_NOTHING => __( 'Nothing', 'as-speaking' ),
+	TalkMeta::IMAGE_LINK_EVENT   => __( 'Event', 'as-speaking' ),
+	TalkMeta::IMAGE_LINK_SESSION => __( 'Session', 'as-speaking' ),
+	TalkMeta::IMAGE_LINK_VIDEO   => __( 'Video', 'as-speaking' ),
+	TalkMeta::IMAGE_LINK_SLIDES  => __( 'Slides', 'as-speaking' ),
 ];
 
 ?><div class="talk-cpt-metabox-section talk-cpt-metabox-section-featured-image"><?= __('Image links to:', 'as-speaking' ) ?> <span id="talk-cpt-image-link-display"><?= $image_link_captions[ $this->talk->get_image_link() ] ?></span>

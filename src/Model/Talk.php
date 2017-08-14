@@ -23,14 +23,19 @@ use WP_Post;
  */
 class Talk {
 
-	const IMAGE_LINK_NOTHING = 'nothing';
-	const IMAGE_LINK_EVENT   = 'event';
-	const IMAGE_LINK_SESSION = 'session';
-	const IMAGE_LINK_VIDEO   = 'video';
-	const IMAGE_LINK_SLIDES  = 'slides';
-
-	const FORM_FIELD_PREFIX = 'talk_cpt_';
-	const META_PREFIX       = 'talk_cpt_meta_';
+	/**
+	 * Contains a map of custom (meta) properties and their corresponding
+	 * sanitization filters..
+	 */
+	const SANITIZATION = [
+		TalkMeta::EVENT_NAME   => FILTER_SANITIZE_STRING,
+		TalkMeta::EVENT_LINK   => FILTER_SANITIZE_URL,
+		TalkMeta::SESSION_DATE => FILTER_SANITIZE_NUMBER_INT,
+		TalkMeta::SESSION_LINK => FILTER_SANITIZE_URL,
+		TalkMeta::VIDEO        => FILTER_SANITIZE_URL,
+		TalkMeta::SLIDES       => FILTER_SANITIZE_URL,
+		TalkMeta::IMAGE_LINK   => FILTER_SANITIZE_STRING,
+	];
 
 	/**
 	 * WordPress post data representing the talk.
@@ -40,78 +45,6 @@ class Talk {
 	 * @var WP_Post
 	 */
 	protected $post;
-
-	/**
-	 * Event name.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $event_name;
-
-	/**
-	 * URI the event links to.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $event_link;
-
-	/**
-	 * Session date.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $session_date;
-
-	/**
-	 * URI the session links to.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $session_link;
-
-	/**
-	 * URI of the video recording.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $video;
-
-	/**
-	 * URI of the slides.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $slides;
-
-	/**
-	 * Element the feature image links to.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var string
-	 */
-	protected $image_link;
-
-	/**
-	 * Whether the meta data has already been loaded.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var bool
-	 */
-	protected $is_meta_loaded = false;
 
 	/**
 	 * Instantiate a Talk object.
@@ -198,10 +131,6 @@ class Talk {
 	 * @return string Name of the event.
 	 */
 	public function get_event_name() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->event_name;
 	}
 
@@ -213,7 +142,10 @@ class Talk {
 	 * @param string $event_name New name of the event.
 	 */
 	public function set_event_name( $event_name ) {
-		$this->event_name = $event_name;
+		$this->event_name = filter_var(
+			$event_name,
+			static::SANITIZATION[ TalkMeta::EVENT_NAME ]
+		);
 	}
 
 	/**
@@ -224,10 +156,6 @@ class Talk {
 	 * @return string URI the event links to.
 	 */
 	public function get_event_link() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->event_link;
 	}
 
@@ -239,7 +167,10 @@ class Talk {
 	 * @param string $event_link New URI the event links to.
 	 */
 	public function set_event_link( $event_link ) {
-		$this->event_link = $event_link;
+		$this->event_link = filter_var(
+			$event_link,
+			static::SANITIZATION[ TalkMeta::EVENT_LINK ]
+		);
 	}
 
 	/**
@@ -250,10 +181,6 @@ class Talk {
 	 * @return string Date of the session.
 	 */
 	public function get_session_date() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->session_date;
 	}
 
@@ -265,7 +192,10 @@ class Talk {
 	 * @param string $session_date New date of the session.
 	 */
 	public function set_session_date( $session_date ) {
-		$this->session_date = $session_date;
+		$this->session_date = filter_var(
+			$session_date,
+			static::SANITIZATION[ TalkMeta::SESSION_DATE ]
+		);
 	}
 
 	/**
@@ -276,10 +206,6 @@ class Talk {
 	 * @return string URI the session links to.
 	 */
 	public function get_session_link() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->session_link;
 	}
 
@@ -291,7 +217,10 @@ class Talk {
 	 * @param string $session_link New URI the session links to.
 	 */
 	public function set_session_link( $session_link ) {
-		$this->session_link = $session_link;
+		$this->session_link = filter_var(
+			$session_link,
+			static::SANITIZATION[ TalkMeta::SESSION_LINK ]
+		);
 	}
 
 	/**
@@ -302,10 +231,6 @@ class Talk {
 	 * @return string URI of the video.
 	 */
 	public function get_video() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->video;
 	}
 
@@ -317,7 +242,10 @@ class Talk {
 	 * @param string $video New URI of the video.
 	 */
 	public function set_video( $video ) {
-		$this->video = $video;
+		$this->video = filter_var(
+			$video,
+			static::SANITIZATION[ TalkMeta::VIDEO ]
+		);
 	}
 
 	/**
@@ -328,10 +256,6 @@ class Talk {
 	 * @return string URI of the slides.
 	 */
 	public function get_slides() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->slides;
 	}
 
@@ -343,7 +267,10 @@ class Talk {
 	 * @param string $slides New URI of the slides.
 	 */
 	public function set_slides( $slides ) {
-		$this->slides = $slides;
+		$this->slides = filter_var(
+			$slides,
+			static::SANITIZATION[ TalkMeta::SLIDES ]
+		);
 	}
 
 	/**
@@ -354,10 +281,6 @@ class Talk {
 	 * @return string Element the featured image links to.
 	 */
 	public function get_image_link() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		return $this->image_link;
 	}
 
@@ -369,7 +292,10 @@ class Talk {
 	 * @param string $image_link New element the featured image links to.
 	 */
 	public function set_image_link( $image_link ) {
-		$this->image_link = $image_link;
+		$this->image_link = filter_var(
+			$image_link,
+			static::SANITIZATION[ TalkMeta::IMAGE_LINK ]
+		);
 	}
 
 	/**
@@ -384,10 +310,6 @@ class Talk {
 	 * @return string Rendered featured image HTML.
 	 */
 	public function get_featured_image( $size = null ) {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		$image = get_the_post_thumbnail( $this->post->ID, $size );
 
 		if ( empty( $image ) ) {
@@ -395,16 +317,16 @@ class Talk {
 		}
 
 		switch ( $this->image_link ) {
-			case static::IMAGE_LINK_EVENT:
+			case TalkMeta::IMAGE_LINK_EVENT:
 				$image = "<a href=\"{$this->event_link}\">{$image}</a>";
 				break;
-			case static::IMAGE_LINK_SESSION:
+			case TalkMeta::IMAGE_LINK_SESSION:
 				$image = "<a href=\"{$this->session_link}\">{$image}</a>";
 				break;
-			case static::IMAGE_LINK_VIDEO:
+			case TalkMeta::IMAGE_LINK_VIDEO:
 				$image = "<a href=\"{$this->video}\">{$image}</a>";
 				break;
-			case static::IMAGE_LINK_SLIDES:
+			case TalkMeta::IMAGE_LINK_SLIDES:
 				$image = "<a href=\"{$this->slides}\">{$image}</a>";
 				break;
 			default:
@@ -422,20 +344,32 @@ class Talk {
 	 * @param array $post $_POST superglobal.
 	 */
 	public function parse_post_data( array $post ) {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		foreach ( $this->get_meta_properties() as $key => $default ) {
-			$this->$key = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . $key ] );
+			$this->$key = filter_var(
+				$post[ TalkMeta::FORM_FIELD_PREFIX . $key ],
+				array_key_exists( $key, static::SANITIZATION )
+					? static::SANITIZATION[ $key ]
+					: FILTER_SANITIZE_STRING
+			);
 		}
 
-		$aa = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_aa' ] );
-		$mm = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_mm' ] );
-		$jj = sanitize_text_field( $post[ static::FORM_FIELD_PREFIX . 'session_jj' ] );
+		$aa = filter_var(
+			$post[ TalkMeta::FORM_FIELD_SESSION_AA ],
+			FILTER_SANITIZE_NUMBER_INT
+		);
 
-		$date = new \DateTimeImmutable("$aa-$mm-$jj" );
-		$this->session_date = $date->getTimestamp();
+		$mm = filter_var(
+			$post[ TalkMeta::FORM_FIELD_SESSION_MM ],
+			FILTER_SANITIZE_NUMBER_INT
+		);
+
+		$jj = filter_var(
+			$post[ TalkMeta::FORM_FIELD_SESSION_JJ ],
+			FILTER_SANITIZE_NUMBER_INT
+		);
+
+		$date = new \DateTimeImmutable( "$aa-$mm-$jj" );
+		$this->set_session_date( $date->getTimestamp() );
 	}
 
 	/**
@@ -447,13 +381,13 @@ class Talk {
 	 */
 	protected function get_meta_properties() {
 		return [
-			'event_name'   => '',
-			'event_link'   => '',
-			'session_date' => '',
-			'session_link' => '',
-			'video'        => '',
-			'slides'       => '',
-			'image_link'   => 'video',
+			TalkMeta::EVENT_NAME   => '',
+			TalkMeta::EVENT_LINK   => '',
+			TalkMeta::SESSION_DATE => '',
+			TalkMeta::SESSION_LINK => '',
+			TalkMeta::VIDEO        => '',
+			TalkMeta::SLIDES       => '',
+			TalkMeta::IMAGE_LINK   => TalkMeta::IMAGE_LINK_VIDEO,
 		];
 	}
 
@@ -467,12 +401,11 @@ class Talk {
 		$meta = get_post_meta( $this->post->ID );
 
 		foreach ( $this->get_meta_properties() as $key => $default ) {
-			$this->$key = array_key_exists( static::META_PREFIX . $key, $meta )
-				? $meta[ static::META_PREFIX . $key ][0]
+			$this->$key = array_key_exists( TalkMeta::META_PREFIX . $key,
+				$meta )
+				? $meta[ TalkMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
-
-		$this->is_meta_loaded = true;
 	}
 
 	/**
@@ -481,21 +414,45 @@ class Talk {
 	 * @since 0.1.0
 	 */
 	public function save_meta() {
-		if ( ! $this->is_meta_loaded ) {
-			$this->load_meta();
-		}
-
 		foreach ( $this->get_meta_properties() as $key => $default ) {
 			if ( $this->$key === $default ) {
-				delete_post_meta( $this->post->ID, static::META_PREFIX . $key );
+				delete_post_meta( $this->post->ID,
+					TalkMeta::META_PREFIX . $key );
 				continue;
 			}
 
 			update_post_meta(
 				$this->post->ID,
-				static::META_PREFIX . $key,
+				TalkMeta::META_PREFIX . $key,
 				$this->$key
 			);
 		}
+	}
+
+	/**
+	 * Magic getter method to fetch meta properties only when requested.
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param string $property Property that was requested.
+	 *
+	 * @return mixed
+	 */
+	public function __get( $property ) {
+		if ( in_array( $property, TalkMeta::PROPERTIES, $strict = true ) ) {
+			$this->load_meta();
+
+			return $this->$property;
+		}
+
+		$message = sprintf(
+			'Undefined property: %s::$%s',
+			get_class(),
+			$property
+		);
+
+		trigger_error( $message, E_USER_NOTICE );
+
+		return null;
 	}
 }

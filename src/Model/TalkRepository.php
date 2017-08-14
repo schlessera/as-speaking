@@ -55,7 +55,7 @@ class TalkRepository {
 			'post_type'      => TalkCPT::SLUG,
 			'post_status'    => 'publish',
 			'posts_per_page' => - 1,
-			'meta_key'       => Talk::META_PREFIX . 'session_date',
+			'meta_key'       => TalkMeta::META_PREFIX . 'session_date',
 			'orderby'        => 'meta_value_num',
 			'order'          => 'DESC',
 		];
