@@ -24,7 +24,7 @@ namespace AlainSchlesser\Speaking;
 interface Registerable {
 
 	/**
-	 * Render the current Registerable.
+	 * Register the current Registerable.
 	 *
 	 * @since 0.1.0
 	 *
