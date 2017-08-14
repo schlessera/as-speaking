@@ -83,7 +83,7 @@ final class AssetsHandler implements Registerable {
 	 */
 	public function enqueue( Asset $asset = null ) {
 		$assets = $asset ? [ $asset ] : $this->assets;
-		foreach ( $assets as $handle => $asset_object ) {
+		foreach ( $assets as $asset_object ) {
 			$asset_object->enqueue();
 		}
 	}
