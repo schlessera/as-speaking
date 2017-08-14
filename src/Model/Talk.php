@@ -439,7 +439,7 @@ class Talk {
 	 * @return mixed
 	 */
 	public function __get( $property ) {
-		if ( in_array( $property, TalkMeta::PROPERTIES, $strict = true ) ) {
+		if ( array_key_exists( $property, $this->get_meta_properties() ) ) {
 			$this->load_meta();
 
 			return $this->$property;
