@@ -11,7 +11,6 @@
 
 namespace AlainSchlesser\Speaking\Metabox;
 
-use AlainSchlesser\Speaking\Assets\MinifiedScriptAsset;
 use AlainSchlesser\Speaking\Assets\ScriptAsset;
 use AlainSchlesser\Speaking\Assets\StyleAsset;
 use AlainSchlesser\Speaking\CustomPostType\Talk as TalkCPT;
@@ -70,7 +69,7 @@ final class Talk extends BaseMetabox {
 	 */
 	protected function get_assets() {
 
-		$date_formatter_script = new MinifiedScriptAsset(
+		$date_formatter_script = new ScriptAsset(
 			self::DATE_FORMATTER_JS_HANDLE,
 			self::DATE_FORMATTER_JS_URI,
 			[],

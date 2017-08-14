@@ -138,7 +138,25 @@ abstract class BaseAsset implements Asset {
 		$uri = PathHelper::check_extension( $uri, $extension );
 		$uri = PathHelper::make_absolute( $uri, AS_SPEAKING_URL );
 
-		return $uri;
+		return $this->check_for_minified_asset( $uri, $extension );;
+	}
+
+	/**
+	 * Return the URI of the minified asset if it is readable and
+	 * `SCRIPT_DEBUG` is not set.
+	 *
+	 * @since 0.1.9
+	 *
+	 * @param string $uri       Source URI.
+	 * @param string $extension Default extension to use.
+	 *
+	 * @return string URI of the asset to use.
+	 */
+	protected function check_for_minified_asset( $uri, $extension ) {
+		$debug        = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
+		$minified_uri = str_replace( $extension, "min.{$extension}", $uri );
+
+		return ! $debug && is_readable( $minified_uri ) ? $minified_uri : $uri;
 	}
 
 	/**
