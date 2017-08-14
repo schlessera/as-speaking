@@ -12,7 +12,7 @@
 namespace AlainSchlesser\Speaking\Metabox;
 
 use AlainSchlesser\Speaking\Assets\AssetsAware;
-use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
+use AlainSchlesser\Speaking\Assets\AssetsAwareness;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\TemplatedView;
@@ -28,7 +28,7 @@ use Closure;
  */
 abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 
-	use AssetsAwareTrait;
+	use AssetsAwareness;
 
 	const CONTEXT_ADVANCED = 'advanced';
 	const CONTEXT_NORMAL   = 'normal';

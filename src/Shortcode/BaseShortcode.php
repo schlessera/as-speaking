@@ -12,7 +12,7 @@
 namespace AlainSchlesser\Speaking\Shortcode;
 
 use AlainSchlesser\Speaking\Assets\AssetsAware;
-use AlainSchlesser\Speaking\Assets\AssetsAwareTrait;
+use AlainSchlesser\Speaking\Assets\AssetsAwareness;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
 use AlainSchlesser\Speaking\TemplatedView;
@@ -27,7 +27,7 @@ use AlainSchlesser\Speaking\TemplatedView;
  */
 abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 
-	use AssetsAwareTrait;
+	use AssetsAwareness;
 
 	/**
 	 * Register the Shortcode.

@@ -14,14 +14,14 @@ namespace AlainSchlesser\Speaking\Assets;
 use AlainSchlesser\Speaking\Exception\InvalidAssetHandle;
 
 /**
- * Trait AssetsAwareTrait
+ * Trait AssetsAwareness
  *
  * @since   0.1.0
  *
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-trait AssetsAwareTrait {
+trait AssetsAwareness {
 
 	/**
 	 * Assets handler instance to use.
