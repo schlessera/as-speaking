@@ -177,6 +177,6 @@ final class Talk extends BaseMetabox {
 		$talks = new TalkRepository();
 		$talk  = $talks->find( $post_id );
 		$talk->parse_post_data( $_POST );
-		$talk->save_meta();
+		$talk->persist_properties();
 	}
 }

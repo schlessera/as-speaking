@@ -23,7 +23,7 @@ use WP_Query;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class TalkRepository {
+final class TalkRepository extends CustomPostTypeRepository {
 
 	/**
 	 * Find the Talk with a given post ID.
@@ -67,17 +67,5 @@ class TalkRepository {
 		}
 
 		return $talks;
-	}
-
-	/**
-	 * Persist a modified Talk to the storage.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param Talk $talk
-	 */
-	public function persist( Talk $talk ) {
-		wp_insert_post( (array) $talk->get_post_object() );
-		$talk->save_meta();
 	}
 }

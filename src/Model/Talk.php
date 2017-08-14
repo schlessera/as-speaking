@@ -11,8 +11,6 @@
 
 namespace AlainSchlesser\Speaking\Model;
 
-use WP_Post;
-
 /**
  * Class Talk.
  *
@@ -21,11 +19,11 @@ use WP_Post;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class Talk {
+class Talk extends CustomPostTypeEntity {
 
 	/**
 	 * Contains a map of custom (meta) properties and their corresponding
-	 * sanitization filters..
+	 * sanitization filters.
 	 */
 	const SANITIZATION = [
 		TalkMeta::EVENT_NAME   => FILTER_SANITIZE_STRING,
@@ -36,92 +34,6 @@ class Talk {
 		TalkMeta::SLIDES       => FILTER_SANITIZE_URL,
 		TalkMeta::IMAGE_LINK   => FILTER_SANITIZE_STRING,
 	];
-
-	/**
-	 * WordPress post data representing the talk.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @var WP_Post
-	 */
-	protected $post;
-
-	/**
-	 * Instantiate a Talk object.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param WP_Post $post Post object to instantiate a Talk model from.
-	 */
-	public function __construct( WP_Post $post ) {
-		$this->post = $post;
-	}
-
-	/**
-	 * Return the post ID.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return int Post ID.
-	 */
-	public function get_ID() {
-		return $this->post->ID;
-	}
-
-	/**
-	 * Return the WP_Post object that represents this model.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return WP_Post WP_Post object representing this model.
-	 */
-	public function get_post_object() {
-		return $this->post;
-	}
-
-	/**
-	 * Get the talk's title.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return string Title of the talk.
-	 */
-	public function get_title() {
-		return $this->post->post_title;
-	}
-
-	/**
-	 * Set the talk's title.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param string $title New title of the talk.
-	 */
-	public function set_title( $title ) {
-		$this->post->post_title = $title;
-	}
-
-	/**
-	 * Get the talk's content.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return string Content of the talk.
-	 */
-	public function get_content() {
-		return $this->post->post_content;
-	}
-
-	/**
-	 * Set the talk's content.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @param string $content New content of the talk.
-	 */
-	public function set_content( $content ) {
-		$this->post->post_content = $content;
-	}
 
 	/**
 	 * Get the name of the event.
@@ -301,7 +213,7 @@ class Talk {
 	/**
 	 * Get the featured image.
 	 *
-	 * Depending on the $image_link setting, it might be wrapped in a link.
+	 * Depending on the `$image_link` setting, it might be wrapped in a link.
 	 *
 	 * @since 0.1.0
 	 *
@@ -344,7 +256,7 @@ class Talk {
 	 * @param array $post $_POST superglobal.
 	 */
 	public function parse_post_data( array $post ) {
-		foreach ( $this->get_meta_properties() as $key => $default ) {
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = filter_var(
 				$post[ TalkMeta::FORM_FIELD_PREFIX . $key ],
 				array_key_exists( $key, static::SANITIZATION )
@@ -373,13 +285,13 @@ class Talk {
 	}
 
 	/**
-	 * Return the list of meta properties and their default values.
+	 * Return the list of lazily-loaded properties and their default values.
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.1
 	 *
 	 * @return array
 	 */
-	protected function get_meta_properties() {
+	protected function get_lazy_properties() {
 		return [
 			TalkMeta::EVENT_NAME   => '',
 			TalkMeta::EVENT_LINK   => '',
@@ -392,15 +304,22 @@ class Talk {
 	}
 
 	/**
-	 * Load the meta data of the model.
+	 * Load a lazily-loaded property.
 	 *
-	 * @since 0.1.0
+	 * After this process, the loaded property should be set within the
+	 * object's state, otherwise the load procedure might be triggered multiple
+	 * times.
 	 *
+	 * @since 0.2.1
+	 *
+	 * @param string $property Name of the property to load.
+	 *
+	 * @return void
 	 */
-	protected function load_meta() {
+	protected function load_lazy_property( $property ) {
 		$meta = get_post_meta( $this->post->ID );
 
-		foreach ( $this->get_meta_properties() as $key => $default ) {
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			$this->$key = array_key_exists( TalkMeta::META_PREFIX . $key,
 				$meta )
 				? $meta[ TalkMeta::META_PREFIX . $key ][0]
@@ -409,12 +328,14 @@ class Talk {
 	}
 
 	/**
-	 * Save the meta data of the model.
+	 * Persist the additional properties of the entity.
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.1
+	 *
+	 * @return void
 	 */
-	public function save_meta() {
-		foreach ( $this->get_meta_properties() as $key => $default ) {
+	public function persist_properties() {
+		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			if ( $this->$key === $default ) {
 				delete_post_meta( $this->post->ID,
 					TalkMeta::META_PREFIX . $key );
@@ -427,32 +348,5 @@ class Talk {
 				$this->$key
 			);
 		}
-	}
-
-	/**
-	 * Magic getter method to fetch meta properties only when requested.
-	 *
-	 * @since 0.2.0
-	 *
-	 * @param string $property Property that was requested.
-	 *
-	 * @return mixed
-	 */
-	public function __get( $property ) {
-		if ( array_key_exists( $property, $this->get_meta_properties() ) ) {
-			$this->load_meta();
-
-			return $this->$property;
-		}
-
-		$message = sprintf(
-			'Undefined property: %s::$%s',
-			get_class(),
-			$property
-		);
-
-		trigger_error( $message, E_USER_NOTICE );
-
-		return null;
 	}
 }
