@@ -24,15 +24,6 @@ use AlainSchlesser\Speaking\Registerable;
 interface Asset extends Registerable {
 
 	/**
-	 * Register the current Registerable.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return void
-	 */
-	public function register();
-
-	/**
 	 * Enqueue the asset.
 	 *
 	 * @since 0.1.0
