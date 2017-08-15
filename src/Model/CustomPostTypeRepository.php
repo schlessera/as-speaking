@@ -29,7 +29,7 @@ abstract class CustomPostTypeRepository {
 	 * @param CustomPostTypeEntity $entity
 	 */
 	public function persist( CustomPostTypeEntity $entity ) {
-		wp_insert_post( (array) $entity->get_post_object() );
+		wp_insert_post( $entity->get_post_object()->to_array() );
 		$entity->persist_properties();
 	}
 }
