@@ -320,8 +320,10 @@ class Talk extends CustomPostTypeEntity {
 		$meta = get_post_meta( $this->post->ID );
 
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
-			$this->$key = array_key_exists( TalkMeta::META_PREFIX . $key,
-				$meta )
+			$this->$key = array_key_exists(
+				TalkMeta::META_PREFIX . $key,
+				$meta
+			)
 				? $meta[ TalkMeta::META_PREFIX . $key ][0]
 				: $default;
 		}
@@ -337,8 +339,10 @@ class Talk extends CustomPostTypeEntity {
 	public function persist_properties() {
 		foreach ( $this->get_lazy_properties() as $key => $default ) {
 			if ( $this->$key === $default ) {
-				delete_post_meta( $this->post->ID,
-					TalkMeta::META_PREFIX . $key );
+				delete_post_meta(
+					$this->post->ID,
+					TalkMeta::META_PREFIX . $key
+				);
 				continue;
 			}
 
