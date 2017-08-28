@@ -92,7 +92,9 @@ final class Talk extends BaseMetabox {
 
 		$metabox_script->add_localization(
 			'speakingPageMetabox',
-			[ 'dateFormat' => get_option( 'date_format' ) ]
+			[
+				'dateFormat' => get_option( 'date_format' ),
+			]
 		);
 
 		return [
