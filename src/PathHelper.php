@@ -48,9 +48,9 @@ final class PathHelper {
 	 * @return string URI with correct extension.
 	 */
 	public static function check_extension( $uri, $extension ) {
-		$detectedExtension = pathinfo( $uri, PATHINFO_EXTENSION );
+		$detected_extension = pathinfo( $uri, PATHINFO_EXTENSION );
 
-		if ( $extension !== $detectedExtension ) {
+		if ( $extension !== $detected_extension ) {
 			$uri .= '.' . $extension;
 		}
 
