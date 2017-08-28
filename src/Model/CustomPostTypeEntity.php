@@ -127,7 +127,7 @@ abstract class CustomPostTypeEntity implements Entity {
 
 		$message = sprintf(
 			'Undefined property: %s::$%s',
-			get_class(),
+			__CLASS__,
 			$property
 		);
 
