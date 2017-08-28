@@ -55,7 +55,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 		$atts    = $this->process_attributes( $atts );
 		$context = $this->get_context( $atts );
 
-		return $this->render( array_merge( $atts, $context ) );
+		return wp_kses_post( $this->render( array_merge( $atts, $context ) ) );
 	}
 
 	/**
