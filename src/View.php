@@ -121,8 +121,8 @@ class View implements Renderable {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @param            $uri
-	 * @param array|null $context
+	 * @param string     $uri     URI of the partial to render.
+	 * @param array|null $context Context in which to render the partial.
 	 *
 	 * @return string
 	 * @throws InvalidURI If the provided URI was not valid.
