@@ -40,6 +40,8 @@ final class Plugin implements Registerable {
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since 0.1.0
+	 *
+	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register() {
 		$this->assets_handler = new AssetsHandler();
@@ -51,6 +53,8 @@ final class Plugin implements Registerable {
 	 * Register the individual services of this plugin.
 	 *
 	 * @since 0.1.0
+	 *
+	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register_services() {
 		$services = $this->get_services();
@@ -77,6 +81,7 @@ final class Plugin implements Registerable {
 	 * @param string $class Service class to instantiate.
 	 *
 	 * @return Service
+	 * @throws Exception\InvalidService If the service is not valid.
 	 */
 	private function instantiate_service( $class ) {
 		if ( ! class_exists( $class ) ) {
