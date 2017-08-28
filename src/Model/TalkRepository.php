@@ -33,6 +33,7 @@ final class TalkRepository extends CustomPostTypeRepository {
 	 * @param int $id Post ID to retrieve.
 	 *
 	 * @return Talk
+	 * @throws InvalidPostID If the post for the requested ID was not found.
 	 */
 	public function find( $id ) {
 		$post = get_post( $id );

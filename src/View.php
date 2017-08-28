@@ -36,6 +36,14 @@ class View implements Renderable {
 	const VIEW_EXTENSION = 'php';
 
 	/**
+	 * Contexts to use for escaping.
+	 *
+	 * @since 0.2.3
+	 */
+	const CONTEXT_HTML       = 'html';
+	const CONTEXT_JAVASCRIPT = 'js';
+
+	/**
 	 * URI to the view file to render.
 	 *
 	 * @since 0.1.0
@@ -107,7 +115,7 @@ class View implements Renderable {
 			);
 		}
 
-		return ob_get_clean();
+		return $this->escape_output( ob_get_clean() );
 	}
 
 	/**
@@ -153,5 +161,19 @@ class View implements Renderable {
 		}
 
 		return $uri;
+	}
+
+	/**
+	 * Escape the rendered output for display.
+	 *
+	 * @since 0.2.3
+	 *
+	 * @param string $output Output to escape.
+	 *
+	 * @return string Escaped output.
+	 */
+	protected function escape_output( $output ) {
+		// No escaping by default, but can be overridden in subclasses.
+		return $output;
 	}
 }
