@@ -15,7 +15,8 @@ use AlainSchlesser\Speaking\Assets\AssetsAware;
 use AlainSchlesser\Speaking\Assets\AssetsAwareness;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
-use AlainSchlesser\Speaking\TemplatedView;
+use AlainSchlesser\Speaking\View\PostEscapedView;
+use AlainSchlesser\Speaking\View\TemplatedView;
 
 /**
  * Abstract class BaseShortcode.
@@ -55,7 +56,7 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 		$atts    = $this->process_attributes( $atts );
 		$context = $this->get_context( $atts );
 
-		return wp_kses_post( $this->render( array_merge( $atts, $context ) ) );
+		return $this->render( array_merge( $atts, $context ) );
 	}
 
 	/**
@@ -71,7 +72,9 @@ abstract class BaseShortcode implements Renderable, AssetsAware, Service {
 		try {
 			$this->enqueue_assets();
 
-			$view = new TemplatedView( $this->get_view_uri() );
+			$view = new PostEscapedView(
+				new TemplatedView( $this->get_view_uri() )
+			);
 
 			return $view->render( $context );
 		} catch ( \Exception $exception ) {

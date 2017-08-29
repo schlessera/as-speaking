@@ -15,7 +15,8 @@ use AlainSchlesser\Speaking\Assets\AssetsAware;
 use AlainSchlesser\Speaking\Assets\AssetsAwareness;
 use AlainSchlesser\Speaking\Renderable;
 use AlainSchlesser\Speaking\Service;
-use AlainSchlesser\Speaking\TemplatedView;
+use AlainSchlesser\Speaking\View\FormEscapedView;
+use AlainSchlesser\Speaking\View\TemplatedView;
 use Closure;
 
 /**
@@ -37,30 +38,6 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 	const PRIORITY_DEFAULT = 'default';
 	const PRIORITY_HIGH    = 'high';
 	const PRIORITY_LOW     = 'low';
-
-	/**
-	 * Tags that are allowed to pass through the escaping function.
-	 *
-	 * @since 0.2.3
-	 *
-	 * @var array
-	 */
-	protected $allowed_tags = [];
-
-	/**
-	 * Instantiate a BaseMetabox object.
-	 *
-	 * @since 0.2.3
-	 *
-	 * @param array|null $allowed_tags Optional. Array of allowed tags to let
-	 *                                 through escaping functions. Set to sane
-	 *                                 defaults if none provided.
-	 */
-	public function __construct( array $allowed_tags = null ) {
-		$this->allowed_tags = null === $allowed_tags
-			? $this->prepare_allowed_tags( wp_kses_allowed_html( 'post' ) )
-			: $allowed_tags;
-	}
 
 	/**
 	 * Register the Metabox.
@@ -98,7 +75,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		$atts['metabox_id']  = $this->get_id();
 		$atts['nonce_field'] = $this->render_nonce();
 
-		echo wp_kses( $this->render( (array) $atts ), $this->allowed_tags );
+		echo $this->render( (array) $atts );
 	}
 
 	/**
@@ -114,7 +91,9 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		try {
 			$this->enqueue_assets();
 
-			$view = new TemplatedView( $this->get_view_uri() );
+			$view = new FormEscapedView(
+				new TemplatedView( $this->get_view_uri() )
+			);
 
 			return $view->render( $context );
 		} catch ( \Exception $exception ) {
@@ -301,56 +280,6 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 
 			return $post_id;
 		};
-	}
-
-	/**
-	 * Prepare an array of allowed tags by adding form elements to the existing
-	 * array.
-	 *
-	 * This makes sure that the basic form elements always pass through the
-	 * escaping functions.
-	 *
-	 * @since 0.2.3
-	 *
-	 * @param array $allowed_tags Allowed tags as fetched from the WordPress
-	 *                            defaults.
-	 * @return array Modified tags array.
-	 */
-	protected function prepare_allowed_tags( $allowed_tags ) {
-		$form_tags = [
-			'form'   => [
-				'id'     => true,
-				'class'  => true,
-				'action' => true,
-				'method' => true,
-			],
-			'input'  => [
-				'id'    => true,
-				'class' => true,
-				'type'  => true,
-				'name'  => true,
-				'value' => true,
-			],
-			'select' => [
-				'id'    => true,
-				'class' => true,
-				'type'  => true,
-				'name'  => true,
-				'value' => true,
-			],
-			'option' => [
-				'id'       => true,
-				'class'    => true,
-				'type'     => true,
-				'name'     => true,
-				'value'    => true,
-				'selected' => true,
-			],
-			'label'  => [
-				'for' => true,
-			],
-		];
-		return array_replace_recursive( $allowed_tags, $form_tags );
 	}
 
 	/**

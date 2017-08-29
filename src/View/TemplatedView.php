@@ -9,7 +9,10 @@
  * @copyright 2017 Alain Schlesser
  */
 
-namespace AlainSchlesser\Speaking;
+namespace AlainSchlesser\Speaking\View;
+
+use AlainSchlesser\Speaking\Exception\InvalidURI;
+use AlainSchlesser\Speaking\PathHelper;
 
 /**
  * Class TemplatedView.
@@ -22,7 +25,7 @@ namespace AlainSchlesser\Speaking;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class TemplatedView extends View {
+final class TemplatedView extends BaseView {
 
 	/**
 	 * Validate an URI.
@@ -32,7 +35,7 @@ class TemplatedView extends View {
 	 * @param string $uri URI to validate.
 	 *
 	 * @return string Validated URI.
-	 * @throws Exception\InvalidURI If an invalid URI was passed into the View.
+	 * @throws InvalidURI If an invalid URI was passed into the View.
 	 */
 	protected function validate( $uri ) {
 		$uri = PathHelper::check_extension( $uri, static::VIEW_EXTENSION );
@@ -44,7 +47,7 @@ class TemplatedView extends View {
 		}
 
 		if ( ! is_readable( $uri ) ) {
-			throw Exception\InvalidURI::from_uri( $uri );
+			throw InvalidURI::from_uri( $uri );
 		}
 
 		return $uri;

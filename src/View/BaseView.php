@@ -9,13 +9,14 @@
  * @copyright 2017 Alain Schlesser
  */
 
-namespace AlainSchlesser\Speaking;
+namespace AlainSchlesser\Speaking\View;
 
 use AlainSchlesser\Speaking\Exception\FailedToLoadView;
 use AlainSchlesser\Speaking\Exception\InvalidURI;
+use AlainSchlesser\Speaking\PathHelper;
 
 /**
- * Class View.
+ * Class BaseView.
  *
  * Very basic View class to abstract away PHP view rendering.
  *
@@ -26,7 +27,7 @@ use AlainSchlesser\Speaking\Exception\InvalidURI;
  * @package AlainSchlesser\Speaking
  * @author  Alain Schlesser <alain.schlesser@gmail.com>
  */
-class View implements Renderable {
+class BaseView implements View {
 
 	/**
 	 * Extension to use for view files.
@@ -68,7 +69,7 @@ class View implements Renderable {
 	 *
 	 * @param string $uri URI to the view file to render.
 	 *
-	 * @throws Exception\InvalidURI If an invalid URI was passed into the View.
+	 * @throws InvalidURI If an invalid URI was passed into the View.
 	 */
 	public function __construct( $uri ) {
 		$this->uri = $this->validate( $uri );
@@ -82,7 +83,7 @@ class View implements Renderable {
 	 * @param array $context Context in which to render.
 	 *
 	 * @return string Rendered HTML.
-	 * @throws Exception\FailedToLoadView If the View URI could not be loaded.
+	 * @throws FailedToLoadView If the View URI could not be loaded.
 	 */
 	public function render( array $context = [] ) {
 
@@ -109,13 +110,13 @@ class View implements Renderable {
 			while ( ob_get_level() > $buffer_level ) {
 				ob_end_clean();
 			}
-			throw Exception\FailedToLoadView::view_exception(
+			throw FailedToLoadView::view_exception(
 				$this->uri,
 				$exception
 			);
 		}
 
-		return $this->escape_output( ob_get_clean() );
+		return ob_get_clean();
 	}
 
 	/**
@@ -132,7 +133,7 @@ class View implements Renderable {
 	 * @param string     $uri     URI of the partial to render.
 	 * @param array|null $context Context in which to render the partial.
 	 *
-	 * @return string
+	 * @return string Rendered HTML.
 	 * @throws InvalidURI If the provided URI was not valid.
 	 * @throws FailedToLoadView If the view could not be loaded.
 	 */
@@ -150,30 +151,16 @@ class View implements Renderable {
 	 * @param string $uri URI to validate.
 	 *
 	 * @return string Validated URI.
-	 * @throws Exception\InvalidURI If an invalid URI was passed into the View.
+	 * @throws InvalidURI If an invalid URI was passed into the View.
 	 */
 	protected function validate( $uri ) {
 		$uri = PathHelper::check_extension( $uri, static::VIEW_EXTENSION );
 		$uri = PathHelper::make_absolute( $uri, AS_SPEAKING_DIR );
 
 		if ( ! is_readable( $uri ) ) {
-			throw Exception\InvalidURI::from_uri( $uri );
+			throw InvalidURI::from_uri( $uri );
 		}
 
 		return $uri;
-	}
-
-	/**
-	 * Escape the rendered output for display.
-	 *
-	 * @since 0.2.3
-	 *
-	 * @param string $output Output to escape.
-	 *
-	 * @return string Escaped output.
-	 */
-	protected function escape_output( $output ) {
-		// No escaping by default, but can be overridden in subclasses.
-		return $output;
 	}
 }
