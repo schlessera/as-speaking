@@ -11,7 +11,6 @@
 
 namespace AlainSchlesser\Speaking\Assets;
 
-use AlainSchlesser\Speaking\PathHelper;
 use Closure;
 
 /**
@@ -135,10 +134,10 @@ abstract class BaseAsset implements Asset {
 	 * @return string Normalized source URI.
 	 */
 	protected function normalize_source( $uri, $extension ) {
-		$uri = PathHelper::check_extension( $uri, $extension );
-		$uri = PathHelper::make_absolute( $uri, AS_SPEAKING_URL );
+		$uri = $this->check_extension( $uri, $extension );
+		$uri = trailingslashit( AS_SPEAKING_URL ) . $uri;
 
-		return $this->check_for_minified_asset( $uri, $extension );;
+		return $this->check_for_minified_asset( $uri, $extension );
 	}
 
 	/**
@@ -157,6 +156,28 @@ abstract class BaseAsset implements Asset {
 		$minified_uri = str_replace( $extension, "min.{$extension}", $uri );
 
 		return ! $debug && is_readable( $minified_uri ) ? $minified_uri : $uri;
+	}
+
+	/**
+	 * Check that the URI has the correct extension.
+	 *
+	 * Optionally adds the extension if none was detected.
+	 *
+	 * @since 0.2.5
+	 *
+	 * @param string $uri       URI to check the extension of.
+	 * @param string $extension Extension to use.
+	 *
+	 * @return string URI with correct extension.
+	 */
+	public function check_extension( $uri, $extension ) {
+		$detected_extension = pathinfo( $uri, PATHINFO_EXTENSION );
+
+		if ( $extension !== $detected_extension ) {
+			$uri .= '.' . $extension;
+		}
+
+		return $uri;
 	}
 
 	/**

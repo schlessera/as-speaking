@@ -12,7 +12,6 @@
 namespace AlainSchlesser\Speaking\View;
 
 use AlainSchlesser\Speaking\Exception\InvalidURI;
-use AlainSchlesser\Speaking\PathHelper;
 
 /**
  * Class TemplatedView.
@@ -38,7 +37,7 @@ final class TemplatedView extends BaseView {
 	 * @throws InvalidURI If an invalid URI was passed into the View.
 	 */
 	protected function validate( $uri ) {
-		$uri = PathHelper::check_extension( $uri, static::VIEW_EXTENSION );
+		$uri = $this->check_extension( $uri, static::VIEW_EXTENSION );
 
 		foreach ( $this->get_locations( $uri ) as $location ) {
 			if ( is_readable( $location ) ) {

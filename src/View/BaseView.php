@@ -13,7 +13,6 @@ namespace AlainSchlesser\Speaking\View;
 
 use AlainSchlesser\Speaking\Exception\FailedToLoadView;
 use AlainSchlesser\Speaking\Exception\InvalidURI;
-use AlainSchlesser\Speaking\PathHelper;
 
 /**
  * Class BaseView.
@@ -154,11 +153,33 @@ class BaseView implements View {
 	 * @throws InvalidURI If an invalid URI was passed into the View.
 	 */
 	protected function validate( $uri ) {
-		$uri = PathHelper::check_extension( $uri, static::VIEW_EXTENSION );
-		$uri = PathHelper::make_absolute( $uri, AS_SPEAKING_DIR );
+		$uri = $this->check_extension( $uri, static::VIEW_EXTENSION );
+		$uri = trailingslashit( AS_SPEAKING_DIR ) . $uri;
 
 		if ( ! is_readable( $uri ) ) {
 			throw InvalidURI::from_uri( $uri );
+		}
+
+		return $uri;
+	}
+
+	/**
+	 * Check that the URI has the correct extension.
+	 *
+	 * Optionally adds the extension if none was detected.
+	 *
+	 * @since 0.2.5
+	 *
+	 * @param string $uri       URI to check the extension of.
+	 * @param string $extension Extension to use.
+	 *
+	 * @return string URI with correct extension.
+	 */
+	protected function check_extension( $uri, $extension ) {
+		$detected_extension = pathinfo( $uri, PATHINFO_EXTENSION );
+
+		if ( $extension !== $detected_extension ) {
+			$uri .= '.' . $extension;
 		}
 
 		return $uri;
