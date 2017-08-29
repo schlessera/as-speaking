@@ -128,6 +128,10 @@ class ScriptAsset extends BaseAsset {
 	 */
 	protected function get_register_closure() {
 		return function () {
+			if ( wp_script_is( $this->handle, 'registered' ) ) {
+				return;
+			}
+
 			wp_register_script(
 				$this->handle,
 				$this->source,
