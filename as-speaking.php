@@ -9,16 +9,17 @@
  * @copyright 2017 Alain Schlesser
  *
  * @wordpress-plugin
- * Plugin Name: AlainSchlesser.com Speaking Page Plugin.
- * Plugin URI:  https://www.alainschlesser.com/
- * Description: Custom post type and presentation tools for a page to promote your speaking gigs.
- * Version:     0.2.3
- * Author:      Alain Schlesser <alain.schlesser@gmail.com>
- * Author URI:  https://www.alainschlesser.com/
- * Text Domain: as-speaking
- * Domain Path: /languages
- * License:     MIT
- * License URI: https://opensource.org/licenses/MIT
+ * Plugin Name:  AlainSchlesser.com Speaking Page Plugin.
+ * Plugin URI:   https://www.alainschlesser.com/
+ * Description:  Custom post type and presentation tools for a page to promote your speaking gigs.
+ * Version:      0.2.3
+ * Requires PHP: 5.6
+ * Author:       Alain Schlesser <alain.schlesser@gmail.com>
+ * Author URI:   https://www.alainschlesser.com/
+ * Text Domain:  as-speaking
+ * Domain Path:  /languages
+ * License:      MIT
+ * License URI:  https://opensource.org/licenses/MIT
  */
 
 namespace AlainSchlesser\Speaking;
