@@ -52,10 +52,23 @@ final class TalkRepository extends CustomPostTypeRepository {
 	 * @return array<Talk>
 	 */
 	public function find_all() {
+		return $this->find_latest( -1 );
+	}
+
+	/**
+	 * Find the latest published Talks.
+	 *
+	 * @since 0.2.4
+
+	 * @param int $limit Maximum number of results to fetch. Defaults to 3.
+	 *
+	 * @return array<Talk>
+	 */
+	public function find_latest( $limit = 3 ) {
 		$args  = [
 			'post_type'      => TalkCPT::SLUG,
 			'post_status'    => 'publish',
-			'posts_per_page' => - 1,
+			'posts_per_page' => $limit,
 			'meta_key'       => TalkMeta::META_PREFIX . 'session_date',
 			'orderby'        => 'meta_value_num',
 			'order'          => 'DESC',

@@ -11,7 +11,11 @@
 .speaking-page-talk-event:before,
 .speaking-page-talk-session:before,
 .speaking-page-talk-video:before,
-.speaking-page-talk-slides:before {
+.speaking-page-talk-slides:before,
+.speaking-widget-talk-event:before,
+.speaking-widget-talk-session:before,
+.speaking-widget-talk-video:before,
+.speaking-widget-talk-slides:before {
     color: #82878c;
     font: normal 20px/1 dashicons;
     speak: none;
@@ -23,18 +27,22 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.speaking-page-talk-event:before {
+.speaking-page-talk-event:before,
+.speaking-widget-talk-event:before {
     content: "\f319";
 }
 
-.speaking-page-talk-session:before {
+.speaking-page-talk-session:before,
+.speaking-widget-talk-session:before {
     content: "\f145";
 }
 
-.speaking-page-talk-video:before {
+.speaking-page-talk-video:before,
+.speaking-widget-talk-video:before {
     content: "\f490";
 }
 
-.speaking-page-talk-slides:before {
+.speaking-page-talk-slides:before,
+.speaking-widget-talk-slides:before {
     content: "\f496";
 }

@@ -113,6 +113,7 @@ final class Plugin implements Registerable {
 			Shortcode\SpeakingPage::class,
 			CustomPostType\Talk::class,
 			Metabox\Talk::class,
+			Widget\Talks::class,
 		];
 	}
 }
