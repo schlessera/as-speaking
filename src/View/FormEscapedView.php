@@ -28,6 +28,43 @@ use AlainSchlesser\Speaking\Exception\InvalidURI;
 final class FormEscapedView implements View {
 
 	/**
+	 * Form tags that are allowed to be rendered.
+	 */
+	const FORM_TAGS = [
+		'form'   => [
+			'id'     => true,
+			'class'  => true,
+			'action' => true,
+			'method' => true,
+		],
+		'input'  => [
+			'id'    => true,
+			'class' => true,
+			'type'  => true,
+			'name'  => true,
+			'value' => true,
+		],
+		'select' => [
+			'id'    => true,
+			'class' => true,
+			'type'  => true,
+			'name'  => true,
+			'value' => true,
+		],
+		'option' => [
+			'id'       => true,
+			'class'    => true,
+			'type'     => true,
+			'name'     => true,
+			'value'    => true,
+			'selected' => true,
+		],
+		'label'  => [
+			'for' => true,
+		],
+	];
+
+	/**
 	 * View instance to decorate.
 	 *
 	 * @since 0.2.4
@@ -116,40 +153,6 @@ final class FormEscapedView implements View {
 	 * @return array Modified tags array.
 	 */
 	private function prepare_allowed_tags( $allowed_tags ) {
-		$form_tags = [
-			'form'   => [
-				'id'     => true,
-				'class'  => true,
-				'action' => true,
-				'method' => true,
-			],
-			'input'  => [
-				'id'    => true,
-				'class' => true,
-				'type'  => true,
-				'name'  => true,
-				'value' => true,
-			],
-			'select' => [
-				'id'    => true,
-				'class' => true,
-				'type'  => true,
-				'name'  => true,
-				'value' => true,
-			],
-			'option' => [
-				'id'       => true,
-				'class'    => true,
-				'type'     => true,
-				'name'     => true,
-				'value'    => true,
-				'selected' => true,
-			],
-			'label'  => [
-				'for' => true,
-			],
-		];
-
-		return array_replace_recursive( $allowed_tags, $form_tags );
+		return array_replace_recursive( $allowed_tags, self::FORM_TAGS );
 	}
 }
