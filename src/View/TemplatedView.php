@@ -65,7 +65,7 @@ final class TemplatedView extends BaseView {
 		return [
 			trailingslashit( STYLESHEETPATH ) . $uri,
 			trailingslashit( TEMPLATEPATH ) . $uri,
-			trailingslashit( AS_SPEAKING_DIR ) . $uri,
+			trailingslashit( dirname( __DIR__, 2 ) ) . $uri,
 		];
 	}
 }

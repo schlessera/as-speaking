@@ -154,7 +154,7 @@ class BaseView implements View {
 	 */
 	protected function validate( $uri ) {
 		$uri = $this->check_extension( $uri, static::VIEW_EXTENSION );
-		$uri = trailingslashit( AS_SPEAKING_DIR ) . $uri;
+		$uri = trailingslashit( dirname( __DIR__, 2 ) ) . $uri;
 
 		if ( ! is_readable( $uri ) ) {
 			throw InvalidURI::from_uri( $uri );
