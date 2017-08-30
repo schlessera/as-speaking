@@ -10,11 +10,13 @@ This plugin is currently active on my personal blog, and you can see the output 
 
 Adding and editing talks should be pretty straight-forward.
 
+To display them on the frontpage, you can use the `[speaking_page]` shortcode.
+
 The talks will automatically be ordered by date, and showed as either "Upcoming Talks" or "Past Talks".
 
 ## Customizing
 
-If you want to override the markup fom within your theme, just create a `views` folder in your (parent or child) theme and copy the file from the plugin's `views` folder in there. You can then change that copied file as needed.
+If you want to override the markup fom within your theme, just create a `views` folder in your (parent or child) theme and copy the file from the plugin's `views` folder in there and copy the markup file(s) you need from the plugin's `views` folder. You can then change the copied file(s) as needed.
 
 ## Screenshots
 
