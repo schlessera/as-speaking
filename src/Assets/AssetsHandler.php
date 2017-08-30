@@ -74,6 +74,22 @@ final class AssetsHandler implements Registerable {
 	}
 
 	/**
+	 * Dequeue a single asset based on its handle.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @param string $handle Handle of the asset to enqueue.
+	 *
+	 * @throws InvalidAssetHandle If the passed-in asset handle is not valid.
+	 */
+	public function dequeue_handle( $handle ) {
+		if ( ! array_key_exists( $handle, $this->assets ) ) {
+			throw InvalidAssetHandle::from_handle( $handle );
+		}
+		$this->assets[ $handle ]->dequeue();
+	}
+
+	/**
 	 * Enqueue all assets known to this asset handler.
 	 *
 	 * @since 0.1.0

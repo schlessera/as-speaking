@@ -33,6 +33,15 @@ interface Asset extends Registerable {
 	public function enqueue();
 
 	/**
+	 * Dequeue the asset.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return void
+	 */
+	public function dequeue();
+
+	/**
 	 * Get the handle of the asset.
 	 *
 	 * @since 0.1.0

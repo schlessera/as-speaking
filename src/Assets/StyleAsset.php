@@ -130,4 +130,17 @@ class StyleAsset extends BaseAsset {
 			wp_enqueue_style( $this->handle );
 		};
 	}
+
+	/**
+	 * Get the dequeue closure to use.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return Closure
+	 */
+	protected function get_dequeue_closure() {
+		return function () {
+			wp_dequeue_style( $this->handle );
+		};
+	}
 }

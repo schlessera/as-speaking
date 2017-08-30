@@ -158,4 +158,17 @@ class ScriptAsset extends BaseAsset {
 			wp_enqueue_script( $this->handle );
 		};
 	}
+
+	/**
+	 * Get the dequeue closure to use.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return Closure
+	 */
+	protected function get_dequeue_closure() {
+		return function () {
+			wp_dequeue_script( $this->handle );
+		};
+	}
 }

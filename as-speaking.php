@@ -11,15 +11,12 @@
  * @wordpress-plugin
  * Plugin Name:  AlainSchlesser.com Speaking Page Plugin.
  * Plugin URI:   https://www.alainschlesser.com/
- * Description:  Custom post type and presentation tools for a page to promote your speaking gigs.
- * Version:      0.2.6
- * Requires PHP: 5.6
- * Author:       Alain Schlesser <alain.schlesser@gmail.com>
- * Author URI:   https://www.alainschlesser.com/
- * Text Domain:  as-speaking
- * Domain Path:  /languages
- * License:      MIT
- * License URI:  https://opensource.org/licenses/MIT
+ * Description:  Custom post type and presentation tools for a page to promote
+ * your speaking gigs. Version:      0.2.6 Requires PHP: 5.6 Author:
+ * Alain Schlesser <alain.schlesser@gmail.com> Author URI:
+ * https://www.alainschlesser.com/ Text Domain:  as-speaking Domain Path:
+ * /languages License:      MIT License URI:
+ * https://opensource.org/licenses/MIT
  */
 
 namespace AlainSchlesser\Speaking;
@@ -43,5 +40,5 @@ require_once AS_SPEAKING_DIR . 'src/Autoloader.php';
 	->register();
 
 // Hook plugin into WordPress request lifecycle.
-( new SpeakingPlugin() )
-	->register();
+PluginFactory::create()
+             ->register();

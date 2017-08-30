@@ -25,6 +25,7 @@ abstract class BaseAsset implements Asset {
 
 	const REGISTER_PRIORITY = 1;
 	const ENQUEUE_PRIORITY  = 10;
+	const DEQUEUE_PRIORITY  = 20;
 
 	/**
 	 * Handle of the asset.
@@ -77,6 +78,21 @@ abstract class BaseAsset implements Asset {
 	}
 
 	/**
+	 * Dequeue the asset.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return void
+	 */
+	public function dequeue() {
+		$this->deferred_action(
+			$this->get_dequeue_action(),
+			$this->get_dequeue_closure(),
+			static::DEQUEUE_PRIORITY
+		);
+	}
+
+	/**
 	 * Add a deferred action hook.
 	 *
 	 * If the action has already passed, the closure will be called directly.
@@ -121,6 +137,17 @@ abstract class BaseAsset implements Asset {
 	 */
 	protected function get_enqueue_action() {
 		return is_admin() ? 'admin_enqueue_scripts' : 'wp_enqueue_scripts';
+	}
+
+	/**
+	 * Get the enqueue action to use.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string Enqueue action name.
+	 */
+	protected function get_dequeue_action() {
+		return is_admin() ? 'admin_print_scripts' : 'wp_print_scripts';
 	}
 
 	/**
@@ -197,4 +224,13 @@ abstract class BaseAsset implements Asset {
 	 * @return Closure
 	 */
 	abstract protected function get_enqueue_closure();
+
+	/**
+	 * Get the dequeue closure to use.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return Closure
+	 */
+	abstract protected function get_dequeue_closure();
 }

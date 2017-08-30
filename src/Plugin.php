@@ -37,6 +37,18 @@ final class Plugin implements Registerable {
 	private $assets_handler;
 
 	/**
+	 * Instantiate a Plugin object.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @param AssetsHandler|null $assets_handler Optional. Instance of the
+	 *                                           assets handler to use.
+	 */
+	public function __construct( AssetsHandler $assets_handler = null ) {
+		$this->assets_handler = $assets_handler ?: new AssetsHandler();
+	}
+
+	/**
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since 0.1.0
@@ -44,7 +56,6 @@ final class Plugin implements Registerable {
 	 * @throws Exception\InvalidService If a service is not valid.
 	 */
 	public function register() {
-		$this->assets_handler = new AssetsHandler();
 		add_action( 'plugins_loaded', [ $this, 'register_services' ] );
 		add_action( 'init', [ $this, 'register_assets_handler' ] );
 	}
@@ -71,6 +82,17 @@ final class Plugin implements Registerable {
 	 */
 	public function register_assets_handler() {
 		$this->assets_handler->register();
+	}
+
+	/**
+	 * Return the instance of the assets handler in use.
+	 *
+	 * @since 0.2.7
+	 *
+	 * @return AssetsHandler
+	 */
+	public function get_assets_handler() {
+		return $this->assets_handler;
 	}
 
 	/**
