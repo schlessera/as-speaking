@@ -24,8 +24,6 @@
 
 namespace AlainSchlesser\Speaking;
 
-use AlainSchlesser\Speaking\Plugin as SpeakingPlugin;
-
 // Store plugin root folder.
 if ( ! defined( 'AS_SPEAKING_DIR' ) ) {
 	define( 'AS_SPEAKING_DIR', trailingslashit( __DIR__ ) );
