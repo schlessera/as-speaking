@@ -159,9 +159,9 @@ final class Talk extends BaseMetabox {
 	 * @return array Processed metabox attributes.
 	 */
 	protected function process_attributes( $atts ) {
-		$talks        = new TalkRepository();
-		$atts         = (array) $atts;
-		$atts['talk'] = $talks->find( get_the_ID() );
+		$talk_repository = new TalkRepository();
+		$atts            = (array) $atts;
+		$atts['talk']    = $talk_repository->find( get_the_ID() );
 
 		return $atts;
 	}
@@ -176,8 +176,8 @@ final class Talk extends BaseMetabox {
 	 * @return void
 	 */
 	protected function persist( $post_id ) {
-		$talks = new TalkRepository();
-		$talk  = $talks->find( $post_id );
+		$talk_repository = new TalkRepository();
+		$talk            = $talk_repository->find( $post_id );
 		$talk->parse_post_data( $_POST );
 		$talk->persist_properties();
 	}

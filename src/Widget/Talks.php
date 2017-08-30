@@ -111,13 +111,13 @@ final class Talks extends BaseWidget {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_frontend_context( $instance, $args ) {
-		$talks = new TalkRepository();
+		$talk_repository = new TalkRepository();
 
 		return [
 			'title' => isset( $instance[ self::FIELD_TITLE ] )
 				? $instance[ self::FIELD_TITLE ]
 				: esc_html__( 'My Talks', 'as-speaking' ),
-			'talks' => $talks->find_latest(),
+			'talks' => $talk_repository->find_latest(),
 		];
 	}
 

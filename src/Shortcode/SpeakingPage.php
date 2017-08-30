@@ -61,10 +61,10 @@ final class SpeakingPage extends BaseShortcode {
 	 * @return array Context to pass onto view.
 	 */
 	protected function get_context( $atts ) {
-		$talks = new TalkRepository();
+		$talk_repository = new TalkRepository();
 
 		return [
-			'talks' => $talks->find_all(),
+			'talks' => $talk_repository->find_all(),
 		];
 	}
 
