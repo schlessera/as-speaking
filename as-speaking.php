@@ -24,6 +24,8 @@
 
 namespace AlainSchlesser\Speaking;
 
+defined( 'ABSPATH' ) or die();
+
 // Store plugin root folder.
 const AS_SPEAKING_DIR = __DIR__;
 
