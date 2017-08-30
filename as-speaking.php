@@ -25,19 +25,12 @@
 namespace AlainSchlesser\Speaking;
 
 // Store plugin root folder.
-if ( ! defined( 'AS_SPEAKING_DIR' ) ) {
-	define( 'AS_SPEAKING_DIR', trailingslashit( __DIR__ ) );
-}
-
-// Store plugin root URL.
-if ( ! defined( 'AS_SPEAKING_URL' ) ) {
-	define( 'AS_SPEAKING_URL', plugin_dir_url( __FILE__ ) );
-}
+const AS_SPEAKING_DIR = __DIR__;
 
 // Load Autoloader class and register plugin namespace.
 require_once AS_SPEAKING_DIR . 'src/Autoloader.php';
 ( new Autoloader() )
-	->add_namespace( 'AlainSchlesser\\Speaking', AS_SPEAKING_DIR . 'src' )
+	->add_namespace( __NAMESPACE__, AS_SPEAKING_DIR . 'src' )
 	->register();
 
 // Hook plugin into WordPress request lifecycle.
