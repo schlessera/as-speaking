@@ -48,7 +48,7 @@ abstract class BaseMetabox implements Renderable, Service, AssetsAware {
 		$this->register_assets();
 		$this->register_persistence_hooks();
 
-		add_action( 'init', function () {
+		add_action( 'add_meta_boxes', function () {
 			add_meta_box(
 				$this->get_id(),
 				$this->get_title(),
