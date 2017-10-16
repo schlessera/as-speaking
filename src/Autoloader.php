@@ -123,15 +123,16 @@ final class Autoloader {
 				$class
 			);
 
+			// Remove a leading backslash from the class name.
+			$filename = $this->remove_leading_backslash( $filename );
+
+
 			// Replace the namespace separator "\" by the system-dependent
 			// directory separator.
 			$filename = str_replace(
 				'\\', DIRECTORY_SEPARATOR,
 				$filename
 			);
-
-			// Remove a leading backslash from the class name.
-			$filename = $this->remove_leading_backslash( $filename );
 
 			// Change to lower case if requested.
 			if ( true === $namespace['lowercase'] ) {
