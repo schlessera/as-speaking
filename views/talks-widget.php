@@ -17,14 +17,14 @@ $upcoming_header = false;
 $past_header     = false;
 $timestamp       = time();
 
-?><h4><?= $this->title ?></h4>
-<div class="speaking-widget-talks">
+?><h4 class="speaking-widget__title"><?= $this->title ?></h4>
+<div class="talks talks--speaking-widget">
 	<?php foreach ( $this->talks as $talk ) :  /** @var Talk $talk */ ?>
 		<?php if ( ! $upcoming_header && $talk->get_session_date() >= $timestamp ) { ?>
-			<h5><?= __( 'Upcoming Talks', 'as-speaking' ) ?></h5>
+			<h5 class="talks__header talks__header--upcoming"><?= __( 'Upcoming Talks', 'as-speaking' ) ?></h5>
 			<?php $upcoming_header = true; ?>
 		<?php } else if ( ! $past_header && $talk->get_session_date() < $timestamp ) { ?>
-			<h5><?= __( 'Past Talks', 'as-speaking' ) ?></h5>
+			<h5 class="talks__header talks__header--past"><?= __( 'Past Talks', 'as-speaking' ) ?></h5>
 			<?php $past_header = true; ?>
 		<?php } ?>
 		<?= $this->render_partial( 'views/talks-widget-talk', [ 'talk' => $talk ] ) ?>

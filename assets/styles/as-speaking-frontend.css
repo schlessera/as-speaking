@@ -8,41 +8,18 @@
  * @copyright 2017 Alain Schlesser
  */
 
-.speaking-page-talk-event:before,
-.speaking-page-talk-session:before,
-.speaking-page-talk-video:before,
-.speaking-page-talk-slides:before,
-.speaking-widget-talk-event:before,
-.speaking-widget-talk-session:before,
-.speaking-widget-talk-video:before,
-.speaking-widget-talk-slides:before {
-    color: #82878c;
-    font: normal 20px/1 dashicons;
-    speak: none;
-    display: inline-block;
-    margin-left: -1px;
-    padding-right: 8px;
-    vertical-align: text-bottom;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+ul.talk__meta-container {
+    overflow: auto;
+    list-style-type: none;
+    padding-left: 0;
 }
 
-.speaking-page-talk-event:before,
-.speaking-widget-talk-event:before {
-    content: "\f319";
+li.talk__meta {
+    float: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 0 20px;
 }
 
-.speaking-page-talk-session:before,
-.speaking-widget-talk-session:before {
-    content: "\f145";
-}
-
-.speaking-page-talk-video:before,
-.speaking-widget-talk-video:before {
-    content: "\f490";
-}
-
-.speaking-page-talk-slides:before,
-.speaking-widget-talk-slides:before {
-    content: "\f496";
+li.talk__meta:last-child {
+    border-right: none;
 }

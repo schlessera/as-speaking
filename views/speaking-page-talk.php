@@ -11,22 +11,22 @@
 
 namespace AlainSchlesser\Speaking;
 
-?><div class="speaking-page-talk">
-	<div class="speaking-page-talk-featured-image"><?= $this->talk->get_featured_image() ?></div>
-	<h4 class="speaking-page-talk-title"><?= $this->talk->get_title() ?></h4>
-	<p class="speaking-page-talk-meta">
+?><div class="talks__container">
+	<div class="talk__featured-image"><?= $this->talk->get_featured_image() ?></div>
+	<h4 class="talk__title"><?= $this->talk->get_title() ?></h4>
+	<ul class="talk__meta-container">
 		<?php if ( ! empty( $this->talk->get_event_name() ) ) : ?>
-			<div class="speaking-page-talk-event"><a href="<?= $this->talk->get_event_link() ?>"><?= $this->talk->get_event_name() ?></a></div>
+			<li class="talk__meta talk__meta--event"><a href="<?= $this->talk->get_event_link() ?>"><?= $this->talk->get_event_name() ?></a></li>
 		<?php endif; ?>
 		<?php if ( ! empty( $this->talk->get_session_date() ) ) : ?>
-			<div class="speaking-page-talk-session"><a href="<?= $this->talk->get_session_link() ?>"><?= empty( $this->talk->get_session_date() ) ? '' : date_i18n( get_option( 'date_format' ), $this->talk->get_session_date() ) ?></a></div>
+			<li class="talk__meta talk__meta--session"><a href="<?= $this->talk->get_session_link() ?>"><?= empty( $this->talk->get_session_date() ) ? '' : date_i18n( get_option( 'date_format' ), $this->talk->get_session_date() ) ?></a></li>
 		<?php endif; ?>
 		<?php if ( ! empty( $this->talk->get_video() ) ) : ?>
-			<div class="speaking-page-talk-video"><a href="<?= $this->talk->get_video() ?>"><?= __( 'Video', 'as-speaking' ) ?></a></div>
+			<li class="talk__meta talk__meta--video"><a href="<?= $this->talk->get_video() ?>"><?= __( 'Video', 'as-speaking' ) ?></a></li>
 		<?php endif; ?>
 		<?php if ( ! empty( $this->talk->get_slides() ) ) : ?>
-			<div class="speaking-page-talk-slides"><a href="<?= $this->talk->get_slides() ?>"><?= __( 'Slides', 'as-speaking' ) ?></a></div>
+			<li class="talk__meta talk__meta--slides"><a href="<?= $this->talk->get_slides() ?>"><?= __( 'Slides', 'as-speaking' ) ?></a></li>
 		<?php endif; ?>
-	</p>
-	<div class="speaking-page-talk-content"><?= wpautop( $this->talk->get_content() ) ?></div>
+	</ul>
+	<div class="talk__content"><?= wpautop( $this->talk->get_content() ) ?></div>
 </div>
