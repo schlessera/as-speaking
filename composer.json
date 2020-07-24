@@ -1,0 +1,14 @@
+{
+    "name": "schlessera/as-speaking",
+    "description": "WordPress plugin to manage an archive of your talks",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alain Schlesser",
+            "email": "alain.schlesser@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
